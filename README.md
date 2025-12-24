@@ -1,48 +1,71 @@
-# USAHADULU.COM — Digital Creative Services
+# USAHADULU.COM — Digital Creative Services Website
 
-Minimalist, underground-style landing page for **USAHADULU.COM**, a digital creative service focused on **streetwear, dark arts, and functional visual design**.
+Website landing page untuk **USAHADULU.COM**, sebuah entitas kreatif yang bergerak di bidang desain visual digital dengan fokus pada estetika **underground, streetwear, dark arts**, dan solusi visual fungsional.
 
-Built with **pure HTML, CSS, and Vanilla JavaScript** — no frameworks, lightweight, and mobile-first.
+Project ini dibuat menggunakan **HTML, CSS, dan JavaScript murni (vanilla)** tanpa framework, dengan pendekatan **mobile-first**, performa ringan, dan interaksi visual yang kuat.
 
 ---
 
 ## 🔥 Preview
+Live demo (GitHub Pages):  
+👉 https://username.github.io/usahadulu  
 
-> Live Demo (GitHub Pages):  
-> https://username.github.io/usahadulu
-
-### Screenshot
-> Add screenshots to `/screenshots` folder and update paths below.
-
-![Homepage](screenshots/home.png)
-![Menu Overlay](screenshots/menu.png)
-![Portfolio Modal](screenshots/portfolio.png)
+> Ganti `username` dengan username GitHub kamu.
 
 ---
 
-## ✨ Features
+## ✨ Fitur Utama
 
-- Fullscreen hero with auto slideshow
-- Hamburger menu with fullscreen overlay
-- Accordion navigation (Services & Contact)
-- Custom cursor (desktop only)
-- Preloader animation
-- Portfolio modal with pagination
-- High-resolution lightbox viewer
-- WhatsApp floating action button
-- Order modal with auto-generated WhatsApp message
-- Fully responsive (mobile-first)
+- 🎯 **Hero Section Fullscreen**
+  - Background slideshow otomatis
+  - CTA langsung ke menu Services
+
+- 🧭 **Hamburger Menu + Fullscreen Overlay**
+  - Accordion menu (Services & Contact)
+  - Animasi transisi clean & responsif
+
+- 🖱 **Custom Cursor (Desktop Only)**
+  - Hover animation dengan efek blend-mode
+  - Otomatis nonaktif di mobile
+
+- ⏳ **Preloader Animation**
+  - Logo pulse animation saat halaman dimuat
+
+- 🖼 **Portfolio Modal + Pagination**
+  - Grid portfolio dengan animasi fade-in
+  - Pagination manual
+  - Lightbox fullscreen dengan judul desain
+
+- 🔍 **Lightbox High Resolution**
+  - Auto-load gambar resolusi tinggi
+  - Loader saat image loading
+  - Layering aman di atas modal portfolio
+
+- 📱 **Floating WhatsApp Button**
+  - Direct order ke WhatsApp
+  - Hover interaction + SVG icon
+
+- 🧾 **Order Modal**
+  - Auto-generate pesan WhatsApp berdasarkan layanan
+  - Alternatif DM Instagram
+
+- ℹ️ **About Modal**
+  - Informasi singkat brand & lokasi
+
+- 📱 **Fully Responsive**
+  - Optimal di mobile, tablet, dan desktop
+  - Cursor custom otomatis nonaktif di layar kecil
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Teknologi yang Digunakan
 
-- HTML5  
-- CSS3 (Vanilla)  
-- JavaScript (Vanilla)  
-
-No framework. No dependency.
+- HTML5
+- CSS3 (Vanilla, tanpa framework)
+- JavaScript (Vanilla)
+- Unsplash Image CDN (untuk placeholder portfolio)
+- SVG Icon (WhatsApp)
 
 ---
 
-## 📂 Project Structure
+## 📂 Struktur File
