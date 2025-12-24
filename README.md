@@ -8,7 +8,7 @@ Project ini dibuat menggunakan **HTML, CSS, dan JavaScript murni (vanilla)** tan
 
 ## 🔥 Preview
 Live demo (GitHub Pages):  
-👉 https://username.github.io/usahadulu  
+👉 https://arie96s.github.io/usahadulu  
 
 > Ganti `username` dengan username GitHub kamu.
 
