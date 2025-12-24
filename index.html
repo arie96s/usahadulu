@@ -2,16 +2,23 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>USAHADULU.COM | Digital Creative Services</title>
     <meta name="description" content="Jasa Desain Grafis Underground, Logo, Apparel, Motion Graphic dan Web Invitation di Dumai. Estetika Streetwear & Dark Arts.">
-    <meta name="keywords" content="Desain Grafis Dumai, Jasa Logo Metal, Streetwear Design, Web Undangan, Video Editing, Magos Streetwear">
+    <meta name="keywords" content="Desain Grafis Dumai, Jasa Logo Metal, Streetwear Design, Web Undangan, Video Editing, Magos Streetwear, Jasa Desain Kaos">
+    <meta name="author" content="Fajri Salam">
+    <meta name="theme-color" content="#000000">
+    
     <meta property="og:title" content="USAHADULU.COM - Digital Creative Services">
     <meta property="og:description" content="Visual Solution for Underground & Streetwear Brands.">
     <meta property="og:image" content="logo_web.png">
-    
+    <meta property="og:type" content="website">
+
     <link rel="icon" type="image/png" href="logo_web.png">
+    <link rel="apple-touch-icon" href="logo_web.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <style>
         /* --- 1. RESET & BASIC SETUP --- */
@@ -19,7 +26,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Default hidden for PC */
+            cursor: none; /* Custom cursor */
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
@@ -37,11 +45,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Class untuk mengunci scroll saat menu terbuka */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
         /* --- 2. CUSTOM CURSOR & PRELOADER --- */
-        
         #cursor {
             position: fixed;
             top: 0;
@@ -87,7 +99,7 @@
             100% { transform: scale(1); opacity: 0.5; }
         }
 
-        /* --- 3. HEADER --- */
+        /* --- 3. HEADER & TOGGLE --- */
         header {
             position: fixed;
             top: 0;
@@ -99,15 +111,78 @@
             align-items: center;
             z-index: 1000;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            transition: background 0.3s;
+        }
+        
+        /* Background header lebih solid saat menu terbuka agar icon terlihat jelas */
+        header.menu-active {
+            background: #000; 
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .brand-logo img {
-            height: 70px;
+            height: 50px;
             width: auto;
             display: block;
             transition: transform 0.3s ease;
         }
         .brand-logo img:hover { transform: scale(1.05); }
+
+        /* LANGUAGE TOGGLE CAPSULE */
+        .lang-switch {
+            width: 60px;
+            height: 30px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            position: relative;
+            transition: background-color 0.3s ease, border 0.3s ease;
+            margin-right: 20px;
+        }
+
+        .lang-switch[data-lang="id"] {
+            background-color: #ffffff;
+            border: 1px solid #ffffff;
+        }
+
+        .lang-switch[data-lang="en"] {
+            background-color: #000000;
+            border: 1px solid #ffffff;
+        }
+
+        .lang-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            position: absolute;
+            transition: transform 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95), background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .lang-switch[data-lang="id"] .lang-circle {
+            transform: translateX(0); 
+            background-color: #000000;
+            color: #fff;
+        }
+        .lang-switch[data-lang="id"] .lang-circle::after { content: "ID"; }
+
+        .lang-switch[data-lang="en"] .lang-circle {
+            transform: translateX(30px); 
+            background-color: #ffffff;
+            color: #000;
+        }
+        .lang-switch[data-lang="en"] .lang-circle::after { content: "EN"; }
+
 
         .menu-btn {
             width: 30px;
@@ -130,7 +205,7 @@
         .menu-btn.active span:nth-child(2) { opacity: 0; }
         .menu-btn.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
 
-        /* --- 4. NAVIGATION OVERLAY --- */
+        /* --- 4. NAVIGATION OVERLAY (FIXED FOR MOBILE) --- */
         .nav-overlay {
             position: fixed;
             top: 0;
@@ -140,17 +215,22 @@
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            /* Perbaikan Layout Mobile: gunakan flex-start dan padding agar bisa discroll */
+            justify-content: flex-start; 
             align-items: center;
+            padding-top: 100px; 
+            padding-bottom: 50px;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
             z-index: 999;
-            padding: 20px;
+            /* Aktifkan scroll vertikal jika konten menu panjang */
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
         }
         .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
-        .menu-list { text-align: center; width: 100%; max-width: 600px; }
+        .menu-list { text-align: center; width: 100%; max-width: 600px; padding: 0 20px; }
         .menu-item { border-bottom: 1px solid var(--accent-color); padding: 20px 0; }
         .menu-title {
             font-size: 24px;
@@ -158,6 +238,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: color 0.3s;
+            display: block; /* Ensure it takes full width click */
         }
         .menu-title:hover { color: #888; }
 
@@ -166,13 +247,27 @@
             overflow: hidden;
             transition: max-height 0.4s ease;
         }
-        .accordion-content li, .social-links a {
+        
+        .service-list-item {
+            display: flex;
+            justify-content: space-between;
             padding: 10px 0;
             font-size: 16px;
             color: #ccc;
+            border-bottom: 1px dashed #333;
             transition: color 0.2s;
         }
-        .accordion-content li:hover, .social-links a:hover { color: #fff; text-decoration: underline; }
+        .service-list-item:hover { color: #fff; }
+        .service-name { text-align: left; }
+        .service-price { font-size: 14px; color: #666; }
+
+        .social-links a {
+            padding: 10px 0;
+            display: block;
+            font-size: 16px;
+            color: #ccc;
+        }
+        .social-links a:hover { color: #fff; text-decoration: underline; }
 
         /* --- 5. HERO SECTION --- */
         .hero {
@@ -238,6 +333,7 @@
             box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
+        /* WA FLOAT */
         .float-wa {
             position: fixed;
             bottom: 30px;
@@ -252,7 +348,7 @@
             align-items: center;
             z-index: 9999;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s;
         }
         .float-wa:hover { transform: scale(1.1); background-color: #fff; }
         .float-wa:hover svg { fill: #000; }
@@ -269,7 +365,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000; /* Layer Portfolio */
+            z-index: 2000;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -288,9 +384,12 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .modal-content.portfolio-content {
-            max-width: 800px;
-            padding: 60px 40px 40px 40px;
+            max-width: 900px;
+            padding: 40px;
             text-align: left;
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* Fixed height for scroll */
         }
 
         .close-modal {
@@ -313,21 +412,56 @@
         .close-modal:hover { background-color: #fff; color: #000; transform: rotate(90deg); }
 
         .modal-title {
-            position: absolute;
-            top: 20px;
-            left: 70px;
-            font-size: 18px;
+            text-align: center;
+            font-size: 24px;
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-top: 10px;
         }
+
+        /* --- FILTERING BUTTONS --- */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .portfolio-scroll-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Scrollbar styling */
+        .portfolio-scroll-area::-webkit-scrollbar { width: 5px; }
+        .portfolio-scroll-area::-webkit-scrollbar-track { background: #111; }
+        .portfolio-scroll-area::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
 
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-bottom: 20px;
-            min-height: 300px;
+            padding-bottom: 20px;
         }
         .portfolio-item {
             background: #222;
@@ -346,18 +480,18 @@
             transition: transform 0.3s, filter 0.3s;
         }
         .portfolio-item:hover img { transform: scale(1.1); filter: brightness(1.2); }
+        .portfolio-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 3px 8px;
+            font-size: 10px;
+            border-radius: 4px;
+            backdrop-filter: blur(2px);
+        }
         
         @keyframes fadeInGrid { to { opacity: 1; transform: translateY(0); } }
-
-        .pagination {
-            display: flex;
-            gap: 10px;
-            position: absolute;
-            bottom: 20px;
-            left: 40px;
-        }
-        .page-num { font-size: 14px; color: #666; cursor: pointer; padding: 5px; }
-        .page-num.active { color: #fff; font-weight: bold; border-bottom: 1px solid #fff; }
 
         .order-btn {
             display: block;
@@ -375,11 +509,10 @@
         }
         .order-btn:hover { background: #fff; color: #000; }
 
-        /* --- MODIFIED LIGHTBOX STYLES --- */
-        /* Z-Index ditingkatkan ke 3000 agar berada DI ATAS Portfolio Modal (2000) */
+        /* --- LIGHTBOX STYLES --- */
         #lightboxModal {
             z-index: 3000; 
-            background: rgba(0,0,0,0.98); /* Background lebih gelap */
+            background: rgba(0,0,0,0.98);
         }
 
         #lightboxModal .modal-content-lightbox {
@@ -394,11 +527,10 @@
             border: none;
         }
         
-        /* New: Design Title di pojok kiri atas */
         #lightboxTitle {
             position: absolute;
             top: 30px;
-            left: 80px; /* Jarak agar tidak menimpa tombol close */
+            left: 80px;
             color: #fff;
             font-size: 20px;
             font-weight: bold;
@@ -441,31 +573,30 @@
             pointer-events: none;
         }
         footer a, footer div { pointer-events: auto; }
-        
-        .footer-socials { display: none; }
 
         /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
             #cursor { display: none !important; }
             * { cursor: auto !important; }
 
-            .brand-logo img { height: 50px; }
+            .brand-logo img { height: 40px; }
             .hero-logo-img { max-width: 250px; }
             
             .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .modal-content.portfolio-content { width: 100%; height: 100%; border-radius: 0; padding: 70px 20px 20px 20px; overflow-y: auto; }
+            .modal-content.portfolio-content { width: 100%; height: 100%; border-radius: 0; padding: 70px 20px 20px 20px; }
             
-            footer { flex-direction: column; gap: 10px; text-align: center; background: #000; position: relative; }
+            footer { flex-direction: column; gap: 10px; text-align: center; background: #000; position: relative; padding-bottom: 80px; }
             
             .float-wa { width: 50px; height: 50px; bottom: 20px; right: 20px; }
             
-            /* Responsive Lightbox Title */
             #lightboxTitle {
                 font-size: 14px;
                 top: 25px;
                 left: 70px;
                 max-width: 70%;
             }
+            
+            .menu-list { width: 100%; padding: 0 15px; }
         }
     </style>
 </head>
@@ -477,18 +608,27 @@
         <img src="logo_web.png" alt="Loading..." class="loader-logo">
     </div>
 
-    <a href="https://wa.me/6282283687565?text=Halo%20Admin%20USAHADULU,%20saya%20tertarik%20tanya%20jasa%20design..." target="_blank" class="float-wa hover-target">
+    <a href="#" id="waFloatBtn" target="_blank" class="float-wa hover-target">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
     </a>
 
-    <header>
-        <div class="brand-logo hover-target">
-            <img src="logo_web.png" alt="USAHADULU.COM">
+    <header id="mainHeader">
+        <div class="header-left">
+            <div class="brand-logo hover-target">
+                <img src="logo_web.png" alt="USAHADULU.COM">
+            </div>
         </div>
-        <div class="menu-btn hover-target" id="menuBtn">
-            <span></span>
-            <span></span>
-            <span></span>
+
+        <div style="display:flex; align-items:center;">
+            <div class="lang-switch hover-target" id="langToggle" data-lang="id" onclick="toggleLanguage()">
+                <div class="lang-circle"></div>
+            </div>
+
+            <div class="menu-btn hover-target" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
@@ -496,39 +636,34 @@
         <ul class="menu-list">
             
             <li class="menu-item" id="serviceMenu">
-                <div class="menu-title hover-target" onclick="toggleAccordion('serviceMenu')">SERVICES</div>
+                <div class="menu-title hover-target" onclick="toggleAccordion('serviceMenu')" data-i18n="nav_services">SERVICES</div>
                 <div class="accordion-content">
-                    <ul>
-                        <li class="hover-target" onclick="openOrderPopup('LOGO BRANDING')">LOGO & BRANDING</li>
-                        <li class="hover-target" onclick="openOrderPopup('T-SHIRT DESIGN')">APPAREL/T-SHIRT DESIGN</li>
-                        <li class="hover-target" onclick="openOrderPopup('FLYER/POSTER')">FLYER/POSTER DESIGN</li>
-                        <li class="hover-target" onclick="openOrderPopup('WEB INVITATION')">WEB DESIGN UNDANGAN</li>
-                        <li class="hover-target" onclick="openOrderPopup('VIDEO EDITNG')">VIDEO DESIGN/MOTION GRAPHIC</li>
-                    </ul>
+                    <ul id="dynamicServiceList">
+                        </ul>
                 </div>
             </li>
 
             <li class="menu-item">
-                <div class="menu-title hover-target" onclick="openPortfolioModal()">PORTFOLIO</div>
+                <div class="menu-title hover-target" onclick="openPortfolioModal()" data-i18n="nav_portfolio">PORTFOLIO</div>
             </li>
 
             <li class="menu-item">
-                <a href="https://arie96s.github.io/magosstreetwear" target="_blank" class="menu-title hover-target">MAGOS STREETWEAR</a>
+                <a href="https://arie96s.github.io/magosstreetwear" target="_blank" class="menu-title hover-target close-menu-link">MAGOS STREETWEAR</a>
             </li>
 
             <li class="menu-item" id="contactMenu">
-                <div class="menu-title hover-target" onclick="toggleAccordion('contactMenu')">CONTACT US</div>
+                <div class="menu-title hover-target" onclick="toggleAccordion('contactMenu')" data-i18n="nav_contact">CONTACT US</div>
                 <div class="accordion-content social-links">
                     <ul>
-                        <li><a href="https://www.instagram.com/arie96s" target="_blank" class="hover-target">INSTAGRAM</a></li>
-                        <li><a href="https://www.youtube.com/@arie96s" target="_blank" class="hover-target">YOUTUBE</a></li>
-                        <li><a href="https://wa.me/6282283687565" target="_blank" class="hover-target">WHATSAPP</a></li>
+                        <li><a href="https://www.instagram.com/arie96s" target="_blank" class="hover-target close-menu-link">INSTAGRAM</a></li>
+                        <li><a href="https://www.youtube.com/@arie96s" target="_blank" class="hover-target close-menu-link">YOUTUBE</a></li>
+                        <li><a href="https://wa.me/6282283687565" target="_blank" class="hover-target close-menu-link">WHATSAPP</a></li>
                     </ul>
                 </div>
             </li>
 
             <li class="menu-item">
-                <div class="menu-title hover-target" onclick="openAboutModal()">ABOUT</div>
+                <div class="menu-title hover-target" onclick="openAboutModal()" data-i18n="nav_about">ABOUT</div>
             </li>
 
         </ul>
@@ -543,7 +678,7 @@
             <img src="logo_web.png" alt="USAHADULU LOGO" class="hero-logo-img">
             <p>EST. 2023 // DUMAI CITY</p>
             
-            <button class="cta-btn hover-target" onclick="openServicesFromHero()">START PROJECT</button>
+            <button class="cta-btn hover-target" onclick="openServicesFromHero()" data-i18n="hero_cta">START PROJECT</button>
         </div>
     </section>
 
@@ -563,10 +698,9 @@
     <div class="modal" id="aboutModal">
         <div class="modal-content">
             <div class="close-modal hover-target" onclick="closeModal('aboutModal')">&times;</div>
-            <h3>ABOUT US</h3>
-            <p style="line-height: 1.6; color: #ccc; margin-top: 15px;">
-                <strong>USAHADULU.COM</strong> adalah entitas kreatif yang bergerak di bidang visual digital. Fokus pada estetika underground, streetwear, dark arts, dan desain fungsional.
-            </p>
+            <h3 data-i18n="about_title">ABOUT US</h3>
+            <p id="aboutText" style="line-height: 1.6; color: #ccc; margin-top: 15px;">
+                </p>
             <br>
             <p style="color: #666; font-size: 12px;">DUMAI, RIAU, INDONESIA.</p>
         </div>
@@ -575,13 +709,15 @@
     <div class="modal" id="portfolioModal">
         <div class="modal-content portfolio-content">
             <div class="close-modal hover-target" onclick="closeModal('portfolioModal')">&times;</div>
-            <div class="modal-title">PORTFOLIO</div>
+            <div class="modal-title" data-i18n="portfolio_title">PORTFOLIO</div>
             
-            <div class="portfolio-grid" id="portfolioGrid">
+            <div class="filter-container" id="filterContainer">
                 </div>
 
-            <div class="pagination" id="paginationControls">
-                </div>
+            <div class="portfolio-scroll-area">
+                <div class="portfolio-grid" id="portfolioGrid">
+                    </div>
+            </div>
         </div>
     </div>
 
@@ -597,147 +733,254 @@
     </div>
 
     <script>
-        // --- DATA PORTFOLIO UPDATED (DENGAN NAMA TITLE) ---
-        const portfolioItems = [
-            { type: 'img', title: 'NEON CYBERPUNK LOGO', src: 'https://images.unsplash.com/photo-1571120038865-c35012e1284a?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'MAGOS STREETWEAR V1', src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'METAL BAND POSTER', src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'DARK ARTS ILLUSTRATION', src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'VINTAGE TYPOGRAPHY', src: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'RETRO WAVE COVER', src: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=60' },
-            // Page 2
-            { type: 'img', title: 'URBAN PHOTOGRAPHY', src: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'EVENT FLYER DUMAI', src: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'GOTHIC MERCHANDISE', src: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=500&q=60' },
-            { type: 'img', title: 'ABSTRACT MOTION', src: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=500&q=60' }
-        ];
+        // --- 0. KONFIGURASI UMUM ---
+        const appConfig = {
+            useLocalImages: false,  // false = pakai Unsplash, true = pakai folder 'img/'
+            localPath: 'img/',      // Nama folder tempat menyimpan gambar
+        };
 
-        // --- PRELOADER ---
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-        });
+        // --- 1. DATA STRUCTURE (JSON) ---
+        const siteData = {
+            currentLang: 'id',
+            translations: {
+                id: {
+                    nav_services: "LAYANAN",
+                    nav_portfolio: "PORTOFOLIO",
+                    nav_contact: "KONTAK",
+                    nav_about: "TENTANG",
+                    hero_cta: "MULAI PROYEK",
+                    about_title: "TENTANG KAMI",
+                    about_desc: "<strong>USAHADULU.COM</strong> adalah entitas kreatif yang bergerak di bidang visual digital. Fokus pada estetika underground, streetwear, dark arts, dan desain fungsional. Kami berbasis di Dumai.",
+                    portfolio_title: "KARYA KAMI",
+                    order_prefix: "Halo Admin USAHADULU, saya tertarik order ",
+                    filter_all: "SEMUA",
+                    price_start: "Mulai"
+                },
+                en: {
+                    nav_services: "SERVICES",
+                    nav_portfolio: "PORTFOLIO",
+                    nav_contact: "CONTACT",
+                    nav_about: "ABOUT",
+                    hero_cta: "START PROJECT",
+                    about_title: "ABOUT US",
+                    about_desc: "<strong>USAHADULU.COM</strong> is a creative entity specializing in digital visuals. Focused on underground aesthetics, streetwear, dark arts, and functional design. Based in Dumai City.",
+                    portfolio_title: "OUR WORK",
+                    order_prefix: "Hello Admin USAHADULU, I'm interested in ordering ",
+                    filter_all: "ALL",
+                    price_start: "Start from"
+                }
+            },
+            services: [
+                { id: 'logo', name_id: "LOGO & BRANDING", name_en: "LOGO & BRANDING", price: "IDR 250K" },
+                { id: 'apparel', name_id: "DESAIN KAOS/APPAREL", name_en: "APPAREL/T-SHIRT DESIGN", price: "IDR 150K" },
+                { id: 'flyer', name_id: "DESAIN POSTER/FLYER", name_en: "FLYER/POSTER DESIGN", price: "IDR 100K" },
+                { id: 'web', name_id: "WEB UNDANGAN DIGITAL", name_en: "WEB INVITATION", price: "IDR 300K" },
+                { id: 'video', name_id: "VIDEO & MOTION GRAPHIC", name_en: "VIDEO & MOTION GRAPHIC", price: "IDR 200K" }
+            ],
+            
+            // --- PORTFOLIO DATA ---
+            portfolio: [
+                { category: 'logo', title: 'NEON CYBERPUNK LOGO', fileName: 'logo_cyberpunk.jpg', demoUrl: 'https://images.unsplash.com/photo-1571120038865-c35012e1284a?auto=format&fit=crop&w=500&q=60' },
+                { category: 'apparel', title: 'MAGOS STREETWEAR V1', fileName: 'magos_v1.jpg', demoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=60' },
+                { category: 'flyer', title: 'METAL BAND POSTER', fileName: 'poster_metal.jpg', demoUrl: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=500&q=60' },
+                { category: 'art', title: 'DARK ARTS ILLUSTRATION', fileName: 'dark_art.jpg', demoUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=60' },
+                { category: 'logo', title: 'VINTAGE TYPOGRAPHY', fileName: 'logo_vintage.jpg', demoUrl: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=500&q=60' },
+                { category: 'web', title: 'RETRO WAVE WEBSITE', fileName: 'web_retro.jpg', demoUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=60' },
+                { category: 'video', title: 'URBAN VLOG INTRO', fileName: 'video_vlog.jpg', demoUrl: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=500&q=60' },
+                { category: 'flyer', title: 'EVENT FLYER DUMAI', fileName: 'flyer_dumai.jpg', demoUrl: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=500&q=60' },
+                { category: 'apparel', title: 'GOTHIC MERCHANDISE', fileName: 'merch_gothic.jpg', demoUrl: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=500&q=60' },
+                { category: 'video', title: 'ABSTRACT MOTION', fileName: 'video_abstract.jpg', demoUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=500&q=60' },
+                { category: 'web', title: 'WEDDING INVITATION', fileName: 'web_wedding.jpg', demoUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=60' }
+            ],
+            filters: ['logo', 'apparel', 'web', 'video', 'flyer']
+        };
 
-        // --- CUSTOM CURSOR ---
+        // --- 2. INITIALIZATION & LANGUAGE LOGIC ---
+        function initSite() {
+            updateLanguageUI();
+            renderServices();
+            renderPortfolio('all');
+            renderFilters();
+            
+            // Set Default WA Link
+            updateWALinks();
+            
+            // Setup Links Close
+            setupExternalLinks();
+        }
+
+        function toggleLanguage() {
+            siteData.currentLang = siteData.currentLang === 'id' ? 'en' : 'id';
+            const toggleBtn = document.getElementById('langToggle');
+            toggleBtn.setAttribute('data-lang', siteData.currentLang);
+            
+            updateLanguageUI();
+            renderServices(); // Re-render services for lang change
+            renderFilters();  // Re-render filters (for "ALL" text)
+            updateWALinks();
+        }
+
+        function updateLanguageUI() {
+            const lang = siteData.currentLang;
+            const t = siteData.translations[lang];
+
+            // Update text elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerHTML = t[key]; // innerHTML allows bold tags
+            });
+
+            // Update specific static content
+            document.getElementById('aboutText').innerHTML = t.about_desc;
+        }
+
+        function updateWALinks() {
+            const lang = siteData.currentLang;
+            const t = siteData.translations[lang];
+            const phone = "6282283687565";
+            const msg = encodeURIComponent(lang === 'id' ? "Halo, saya ingin bertanya jasa desain." : "Hello, I want to ask about design services.");
+            
+            document.getElementById('waFloatBtn').href = `https://wa.me/${phone}?text=${msg}`;
+        }
+
+        // --- 3. DYNAMIC SERVICES RENDERING ---
+        function renderServices() {
+            const container = document.getElementById('dynamicServiceList');
+            container.innerHTML = '';
+            const lang = siteData.currentLang;
+
+            siteData.services.forEach(svc => {
+                const name = lang === 'id' ? svc.name_id : svc.name_en;
+                const li = document.createElement('li');
+                li.className = 'service-list-item hover-target';
+                li.onclick = () => openOrderPopup(name);
+                
+                li.innerHTML = `
+                    <span class="service-name">${name}</span>
+                    <span class="service-price">${siteData.translations[lang].price_start} ${svc.price}</span>
+                `;
+                container.appendChild(li);
+            });
+            bindHoverEvents();
+        }
+
+        // --- 4. PORTFOLIO & FILTERING LOGIC ---
+        function renderFilters() {
+            const container = document.getElementById('filterContainer');
+            container.innerHTML = '';
+            const lang = siteData.currentLang;
+            const t = siteData.translations[lang];
+
+            // "ALL" Button
+            const allBtn = document.createElement('button');
+            allBtn.className = 'filter-btn hover-target active';
+            allBtn.innerText = t.filter_all;
+            allBtn.onclick = (e) => handleFilterClick(e, 'all');
+            container.appendChild(allBtn);
+
+            // Dynamic Category Buttons
+            siteData.filters.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn hover-target';
+                btn.innerText = cat.toUpperCase();
+                btn.onclick = (e) => handleFilterClick(e, cat);
+                container.appendChild(btn);
+            });
+            bindHoverEvents();
+        }
+
+        function handleFilterClick(e, category) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            renderPortfolio(category);
+        }
+
+        function renderPortfolio(filterCategory) {
+            const grid = document.getElementById('portfolioGrid');
+            grid.innerHTML = '';
+
+            const items = filterCategory === 'all' 
+                ? siteData.portfolio 
+                : siteData.portfolio.filter(item => item.category === filterCategory);
+
+            if (items.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#666;">No items found.</p>';
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'portfolio-item hover-target';
+                div.style.animationDelay = `${index * 0.1}s`;
+                
+                let finalSrc = "";
+                if (appConfig.useLocalImages) {
+                    finalSrc = appConfig.localPath + item.fileName;
+                } else {
+                    finalSrc = item.demoUrl;
+                }
+
+                div.onclick = () => openLightbox(finalSrc, item.title);
+                
+                div.innerHTML = `
+                    <img src="${finalSrc}" alt="${item.title}">
+                    <div class="portfolio-tag">${item.category.toUpperCase()}</div>
+                `;
+                grid.appendChild(div);
+            });
+
+            bindHoverEvents();
+        }
+
+        // --- 5. INTERACTION & UTILS ---
+        
+        // Custom Cursor
         const cursor = document.getElementById('cursor');
         function bindHoverEvents() {
-            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .page-num, .cta-btn, .float-wa, .portfolio-item');
+            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch');
             hoverTargets.forEach(target => {
                 target.removeEventListener('mouseenter', null); 
                 target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
                 target.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
             });
         }
-
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        bindHoverEvents();
-
-        // --- HERO BUTTON LOGIC ---
-        function openServicesFromHero() {
-            document.getElementById('menuBtn').classList.add('active');
-            document.getElementById('navOverlay').classList.add('open');
-            const serviceItem = document.getElementById('serviceMenu');
-            const content = serviceItem.querySelector('.accordion-content');
-            if (!content.style.maxHeight) {
-                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        }
-
-        // --- PORTFOLIO LOGIC & LIGHTBOX ---
-        const itemsPerPage = 6;
-        let currentPage = 1;
-        
-        function renderPortfolio(page) {
-            const grid = document.getElementById('portfolioGrid');
-            const controls = document.getElementById('paginationControls');
-            grid.innerHTML = '';
-            controls.innerHTML = '';
-
-            const start = (page - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageItems = portfolioItems.slice(start, end);
-
-            pageItems.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'portfolio-item hover-target';
-                div.style.animationDelay = `${index * 0.1}s`;
-                // Pass Title ke function openLightbox
-                div.onclick = () => openLightbox(item.src, item.title);
-                
-                div.innerHTML = `<img src="${item.src}" alt="${item.title}">`;
-                grid.appendChild(div);
-            });
-
-            bindHoverEvents();
-
-            const totalPages = Math.ceil(portfolioItems.length / itemsPerPage);
-            if (totalPages > 1) {
-                for (let i = 1; i <= totalPages; i++) {
-                    const span = document.createElement('span');
-                    span.className = `page-num hover-target ${i === page ? 'active' : ''}`;
-                    span.innerText = i;
-                    span.onclick = () => {
-                        currentPage = i;
-                        renderPortfolio(i);
-                    };
-                    controls.appendChild(span);
-                }
-                bindHoverEvents();
-            }
-        }
-
-        // FUNGSI LIGHTBOX MODIFIED
-        function openLightbox(lowResSrc, title) {
-            const modal = document.getElementById('lightboxModal');
-            const img = document.getElementById('lightboxImg');
-            const loader = document.getElementById('lightboxLoader');
-            const titleEl = document.getElementById('lightboxTitle');
-
-            // Set Title
-            titleEl.innerText = title || "DESIGN PREVIEW";
-
-            modal.classList.add('show');
-            img.style.display = 'none';
-            loader.style.display = 'block';
-
-            let highResSrc = lowResSrc.replace('w=500', 'w=1600').replace('q=60', 'q=90');
-            img.src = highResSrc;
-
-            img.onload = () => {
-                loader.style.display = 'none'; 
-                img.style.display = 'block';   
-            };
-        }
-
-        // FUNGSI KHUSUS TUTUP LIGHTBOX SAJA (KEMBALI KE PORTFOLIO)
-        function closeLightboxOnly() {
-            document.getElementById('lightboxModal').classList.remove('show');
-            // Portfolio Modal dibiarkan tetap terbuka di belakangnya
-        }
-
-        function openPortfolioModal() {
-            renderPortfolio(1);
-            // Tutup Menu Utama
-            document.getElementById('menuBtn').classList.remove('active');
-            document.getElementById('navOverlay').classList.remove('open');
-            // Buka Portfolio
-            document.getElementById('portfolioModal').classList.add('show');
-        }
-
-        // --- MENU LOGIC ---
+        // Modals & Navigation
         const menuBtn = document.getElementById('menuBtn');
         const navOverlay = document.getElementById('navOverlay');
+        const mainHeader = document.getElementById('mainHeader');
 
-        menuBtn.addEventListener('click', () => {
+        // Toggle Menu Function
+        function toggleMenu() {
             menuBtn.classList.toggle('active');
             navOverlay.classList.toggle('open');
-        });
+            mainHeader.classList.toggle('menu-active');
+            
+            // Lock body scroll
+            document.body.classList.toggle('no-scroll');
+        }
+
+        // Close Menu Function
+        function closeMenu() {
+            menuBtn.classList.remove('active');
+            navOverlay.classList.remove('open');
+            mainHeader.classList.remove('menu-active');
+            document.body.classList.remove('no-scroll');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking external links (e.g., Magos, IG)
+        function setupExternalLinks() {
+            const links = document.querySelectorAll('.close-menu-link');
+            links.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
 
         function toggleAccordion(id) {
             const item = document.getElementById(id);
@@ -750,52 +993,105 @@
             }
         }
 
-        const slides = document.querySelectorAll('.hero-slide');
-        let currentSlide = 0;
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-        setInterval(nextSlide, 4000);
-
         function openOrderPopup(serviceName) {
             document.getElementById('orderTitle').innerText = "ORDER: " + serviceName;
-            const message = encodeURIComponent(`Halo Admin USAHADULU, saya tertarik untuk order layanan ${serviceName}. Mohon infonya.`);
+            const lang = siteData.currentLang;
+            const prefix = siteData.translations[lang].order_prefix;
+            
+            const message = encodeURIComponent(`${prefix}${serviceName}.`);
             document.getElementById('btnWA').href = `https://wa.me/6282283687565?text=${message}`;
             
-            // Logika: Saat buka order, tutup menu utama
-            menuBtn.classList.remove('active');
-            navOverlay.classList.remove('open');
+            closeMenu(); // Close menu first
             document.getElementById('orderModal').classList.add('show');
         }
 
+        function openPortfolioModal() {
+            // Reset to All when opening
+            renderPortfolio('all');
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn').classList.add('active');
+
+            closeMenu(); // Close menu first
+            document.getElementById('portfolioModal').classList.add('show');
+        }
+
         function openAboutModal() {
-            menuBtn.classList.remove('active');
-            navOverlay.classList.remove('open');
+            closeMenu(); // Close menu first
             document.getElementById('aboutModal').classList.add('show');
         }
 
-        // FUNGSI CLOSE GENERAL
+        function openServicesFromHero() {
+            if (!navOverlay.classList.contains('open')) {
+                toggleMenu();
+            }
+            const serviceItem = document.getElementById('serviceMenu');
+            const content = serviceItem.querySelector('.accordion-content');
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('show');
         }
 
-        // MODIFIED: Window OnClick untuk menutup modal saat klik di luar
+        // Lightbox
+        function openLightbox(src, title) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            const loader = document.getElementById('lightboxLoader');
+            const titleEl = document.getElementById('lightboxTitle');
+
+            titleEl.innerText = title || "DESIGN PREVIEW";
+            modal.classList.add('show');
+            img.style.display = 'none';
+            loader.style.display = 'block';
+
+            let displaySrc = src;
+
+            if (!appConfig.useLocalImages && src.includes('unsplash')) {
+                displaySrc = src.replace('w=500', 'w=1600').replace('q=60', 'q=90');
+            } 
+
+            img.src = displaySrc;
+
+            img.onload = () => {
+                loader.style.display = 'none'; 
+                img.style.display = 'block';   
+            };
+        }
+
+        function closeLightboxOnly() {
+            document.getElementById('lightboxModal').classList.remove('show');
+        }
+
+        // Global Click to Close
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
-                // Cek ID modal mana yang diklik
-                const clickedModalId = event.target.id;
-                
-                // Jika yang diklik area hitam Lightbox
-                if (clickedModalId === 'lightboxModal') {
-                    closeLightboxOnly(); // Hanya tutup lightbox, portfolio tetap ada
+                if (event.target.id === 'lightboxModal') {
+                    closeLightboxOnly(); 
                 } else {
-                    // Jika modal lain (Order, About, Portfolio), tutup normal
                     event.target.classList.remove('show');
                 }
             }
         }
+
+        // Hero Slider
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 4000);
+
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            
+            initSite();
+        });
+
     </script>
 </body>
 </html>
