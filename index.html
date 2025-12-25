@@ -30,7 +30,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Custom cursor */
+            cursor: none;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -38,8 +38,9 @@
             --bg-color: #000000;
             --text-color: #ffffff;
             --accent-color: #333333;
-            /* UPDATED FONT: Menggunakan Inter dari Google Fonts */
             --font-main: 'Inter', Helvetica, Arial, sans-serif;
+            /* Easing function untuk animasi yang lebih smooth */
+            --ease-smooth: cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         body {
@@ -50,15 +51,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Class untuk mengunci scroll saat menu terbuka */
-        body.no-scroll {
-            overflow: hidden;
-        }
-
+        body.no-scroll { overflow: hidden; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* --- 2. CUSTOM CURSOR & PRELOADER --- */
+        /* --- 2. CUSTOM CURSOR --- */
         #cursor {
             position: fixed;
             top: 0;
@@ -94,10 +91,7 @@
             transition: opacity 0.8s ease, visibility 0.8s;
         }
         
-        .loader-logo {
-            width: 80px;
-            animation: pulse 1.5s infinite;
-        }
+        .loader-logo { width: 80px; animation: pulse 1.5s infinite; }
         @keyframes pulse {
             0% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.1); opacity: 1; }
@@ -118,18 +112,9 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
             transition: background 0.3s;
         }
-        
-        /* Background header lebih solid saat menu terbuka agar icon terlihat jelas */
-        header.menu-active {
-            background: #000; 
-        }
+        header.menu-active { background: #000; }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
+        .header-left { display: flex; align-items: center; gap: 20px; }
         .brand-logo img {
             height: 50px;
             width: auto;
@@ -138,7 +123,6 @@
         }
         .brand-logo img:hover { transform: scale(1.05); }
 
-        /* LANGUAGE TOGGLE CAPSULE */
         .lang-switch {
             width: 60px;
             height: 30px;
@@ -150,16 +134,8 @@
             transition: background-color 0.3s ease, border 0.3s ease;
             margin-right: 20px;
         }
-
-        .lang-switch[data-lang="id"] {
-            background-color: #ffffff;
-            border: 1px solid #ffffff;
-        }
-
-        .lang-switch[data-lang="en"] {
-            background-color: #000000;
-            border: 1px solid #ffffff;
-        }
+        .lang-switch[data-lang="id"] { background-color: #ffffff; border: 1px solid #ffffff; }
+        .lang-switch[data-lang="en"] { background-color: #000000; border: 1px solid #ffffff; }
 
         .lang-circle {
             width: 24px;
@@ -173,35 +149,15 @@
             font-size: 10px;
             font-weight: bold;
         }
-
-        .lang-switch[data-lang="id"] .lang-circle {
-            transform: translateX(0); 
-            background-color: #000000;
-            color: #fff;
-        }
+        .lang-switch[data-lang="id"] .lang-circle { transform: translateX(0); background-color: #000000; color: #fff; }
         .lang-switch[data-lang="id"] .lang-circle::after { content: "ID"; }
-
-        .lang-switch[data-lang="en"] .lang-circle {
-            transform: translateX(30px); 
-            background-color: #ffffff;
-            color: #000;
-        }
+        .lang-switch[data-lang="en"] .lang-circle { transform: translateX(30px); background-color: #ffffff; color: #000; }
         .lang-switch[data-lang="en"] .lang-circle::after { content: "EN"; }
 
-
-        .menu-btn {
-            width: 30px;
-            height: 20px;
-            position: relative;
-            z-index: 1001;
-        }
+        .menu-btn { width: 30px; height: 20px; position: relative; z-index: 1001; }
         .menu-btn span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: var(--text-color);
-            position: absolute;
-            transition: all 0.3s ease;
+            display: block; width: 100%; height: 2px; background-color: var(--text-color);
+            position: absolute; transition: all 0.3s ease;
         }
         .menu-btn span:nth-child(1) { top: 0; }
         .menu-btn span:nth-child(2) { top: 9px; }
@@ -210,150 +166,168 @@
         .menu-btn.active span:nth-child(2) { opacity: 0; }
         .menu-btn.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
 
-        /* --- 4. NAVIGATION OVERLAY (FIXED FOR MOBILE) --- */
+        /* --- 4. NAVIGATION OVERLAY --- */
         .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            /* Perbaikan Layout Mobile: gunakan flex-start dan padding agar bisa discroll */
-            justify-content: flex-start; 
-            align-items: center;
-            padding-top: 100px; 
-            padding-bottom: 50px;
-            opacity: 0;
-            pointer-events: none;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            padding-top: 100px; padding-bottom: 50px;
+            opacity: 0; pointer-events: none;
             transition: opacity 0.4s ease;
             z-index: 999;
-            /* Aktifkan scroll vertikal jika konten menu panjang */
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
         .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
         .menu-list { text-align: center; width: 100%; max-width: 600px; padding: 0 20px; }
         .menu-item { border-bottom: 1px solid var(--accent-color); padding: 20px 0; }
         .menu-title {
-            font-size: 24px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: color 0.3s;
-            display: block; /* Ensure it takes full width click */
+            font-size: 24px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; transition: color 0.3s; display: block;
         }
         .menu-title:hover { color: #888; }
 
+        /* Accordion Animations */
         .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
+            max-height: 0; 
+            overflow: hidden; 
+            /* Menggunakan cubic-bezier untuk animasi lipatan lebih smooth */
+            transition: max-height 0.6s var(--ease-smooth);
         }
         
-        .service-list-item {
+        /* Service Accordion Styling */
+        .service-wrapper {
+            border-bottom: 1px dashed #333;
+            margin-bottom: 5px;
+        }
+        
+        .service-header {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 15px 0;
             font-size: 16px;
             color: #ccc;
-            border-bottom: 1px dashed #333;
-            transition: color 0.2s;
+            transition: color 0.3s;
         }
-        .service-list-item:hover { color: #fff; }
-        .service-name { text-align: left; }
-        .service-price { font-size: 14px; color: #666; }
+        .service-header:hover { color: #fff; }
+        .service-header.active { color: #fff; font-weight: bold; }
+        
+        .service-icon-state {
+            font-size: 12px;
+            transition: transform 0.4s var(--ease-smooth);
+        }
+        .service-header.active .service-icon-state { transform: rotate(180deg); }
+
+        .service-body {
+            max-height: 0;
+            overflow: hidden;
+            /* Transisi smooth untuk sub-accordion */
+            transition: max-height 0.6s var(--ease-smooth);
+            text-align: left;
+            background: #0a0a0a;
+            padding: 0 10px;
+        }
+
+        .service-desc {
+            font-size: 13px;
+            color: #888;
+            margin: 15px 0 20px 0;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .price-table {
+            width: 100%;
+            margin-bottom: 25px;
+            border-collapse: collapse;
+        }
+        .price-table td {
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #222;
+        }
+        .price-table td:last-child {
+            text-align: right;
+            color: #fff;
+            font-family: monospace;
+        }
+        .price-table td:first-child { color: #aaa; }
+
+        /* --- UPDATED BUTTON STYLE (MATCHING HERO CTA) --- */
+        .service-action-btn {
+            display: inline-block;
+            width: auto;
+            min-width: 180px;
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px; /* Membuat bentuk kapsul/pill */
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-action-btn:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5); /* Efek glow */
+            transform: translateY(-2px);
+        }
+
+        /* Center the button wrapper */
+        .service-btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
 
         .social-links a {
-            padding: 10px 0;
-            display: block;
-            font-size: 16px;
-            color: #ccc;
+            padding: 10px 0; display: block; font-size: 16px; color: #ccc;
         }
         .social-links a:hover { color: #fff; text-decoration: underline; }
 
         /* --- 5. HERO SECTION --- */
         .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative; height: 100vh; width: 100%; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
         .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            z-index: -1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1.5s ease-in-out; z-index: -1;
         }
         .hero-slide.active { opacity: 0.5; }
-        .hero-content {
-            z-index: 2;
-            text-align: center;
-            padding: 20px;
-        }
+        .hero-content { z-index: 2; text-align: center; padding: 20px; }
         .hero-logo-img {
-            max-width: 350px;
-            width: 80%;
-            height: auto;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+            max-width: 350px; width: 80%; height: auto;
+            margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
         }
         .hero-content p { 
-            font-size: 1rem; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-            color: #ccc; 
-            margin-bottom: 25px;
+            font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; 
+            color: #ccc; margin-bottom: 25px;
         }
 
         .cta-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border-radius: 50px;
+            display: inline-block; padding: 15px 40px; background: transparent;
+            border: 1px solid #fff; color: #fff; font-size: 14px; font-weight: bold;
+            letter-spacing: 3px; text-transform: uppercase;
+            transition: all 0.3s ease; position: relative; overflow: hidden; border-radius: 50px;
         }
-        .cta-btn:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
-        }
+        .cta-btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
 
         /* WA FLOAT */
         .float-wa {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background-color: #111;
-            border: 1px solid #fff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            transition: transform 0.3s;
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background-color: #111; border: 1px solid #fff; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6); transition: transform 0.3s;
         }
         .float-wa:hover { transform: scale(1.1); background-color: #fff; }
         .float-wa:hover svg { fill: #000; }
@@ -361,246 +335,105 @@
 
         /* --- 7. MODALS --- */
         .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center;
+            z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .modal.show { opacity: 1; pointer-events: auto; }
         
         .modal-content {
-            background: #111;
-            border: 1px solid #333;
-            padding: 50px 40px 40px 40px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #111; border: 1px solid #333; padding: 50px 40px 40px 40px;
+            width: 90%; max-width: 400px; text-align: center; position: relative;
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .modal-content.portfolio-content {
-            max-width: 900px;
-            padding: 40px;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            height: 90vh; /* Fixed height for scroll */
+            max-width: 900px; padding: 40px; text-align: left;
+            display: flex; flex-direction: column; height: 90vh;
         }
 
         .close-modal {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            width: 35px;
-            height: 35px;
-            background-color: #222;
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            border: 1px solid #333;
-            transition: all 0.3s;
-            z-index: 2001; 
+            position: absolute; top: 15px; left: 20px; width: 35px; height: 35px;
+            background-color: #222; color: #fff; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 20px;
+            border: 1px solid #333; transition: all 0.3s; z-index: 2001; 
         }
         .close-modal:hover { background-color: #fff; color: #000; transform: rotate(90deg); }
 
         .modal-title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            padding-top: 10px;
+            text-align: center; font-size: 24px; font-weight: bold;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; padding-top: 10px;
         }
 
-        /* --- FILTERING BUTTONS --- */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .filter-btn {
-            background: transparent;
-            border: 1px solid #444;
-            color: #888;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s;
+            background: transparent; border: 1px solid #444; color: #888;
+            padding: 8px 16px; border-radius: 20px; font-size: 12px;
+            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s;
         }
-        .filter-btn:hover, .filter-btn.active {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-        }
+        .filter-btn:hover, .filter-btn.active { background: #fff; color: #000; border-color: #fff; }
 
-        .portfolio-scroll-area {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        /* Scrollbar styling */
+        .portfolio-scroll-area { flex-grow: 1; overflow-y: auto; padding-right: 10px; }
         .portfolio-scroll-area::-webkit-scrollbar { width: 5px; }
         .portfolio-scroll-area::-webkit-scrollbar-track { background: #111; }
         .portfolio-scroll-area::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
 
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            padding-bottom: 20px;
-        }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding-bottom: 20px; }
         .portfolio-item {
-            background: #222;
-            border-radius: 8px;
-            overflow: hidden;
-            aspect-ratio: 1 / 1;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInGrid 0.5s forwards;
-            position: relative;
+            background: #222; border-radius: 8px; overflow: hidden; aspect-ratio: 1 / 1;
+            opacity: 0; transform: translateY(20px); animation: fadeInGrid 0.5s forwards; position: relative;
         }
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s, filter 0.3s;
-        }
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s, filter 0.3s; }
         .portfolio-item:hover img { transform: scale(1.1); filter: brightness(1.2); }
         .portfolio-tag {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.7);
-            padding: 3px 8px;
-            font-size: 10px;
-            border-radius: 4px;
-            backdrop-filter: blur(2px);
+            position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7);
+            padding: 3px 8px; font-size: 10px; border-radius: 4px; backdrop-filter: blur(2px);
         }
         
         @keyframes fadeInGrid { to { opacity: 1; transform: translateY(0); } }
 
         .order-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid #fff;
-            background: transparent;
-            color: #fff;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            transition: all 0.3s;
+            display: block; width: 100%; padding: 15px; margin-bottom: 15px;
+            border: 1px solid #fff; background: transparent; color: #fff;
+            text-transform: uppercase; font-weight: bold; letter-spacing: 1px;
+            border-radius: 8px; transition: all 0.3s;
         }
         .order-btn:hover { background: #fff; color: #000; }
 
-        /* --- LIGHTBOX STYLES --- */
-        #lightboxModal {
-            z-index: 3000; 
-            background: rgba(0,0,0,0.98);
-        }
-
+        /* LIGHTBOX */
+        #lightboxModal { z-index: 3000; background: rgba(0,0,0,0.98); }
         #lightboxModal .modal-content-lightbox {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background: transparent;
-            box-shadow: none;
-            border: none;
+            width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;
+            position: relative; background: transparent; box-shadow: none; border: none;
         }
-        
         #lightboxTitle {
-            position: absolute;
-            top: 30px;
-            left: 80px;
-            color: #fff;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            z-index: 3002;
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
-            pointer-events: none;
+            position: absolute; top: 30px; left: 80px; color: #fff; font-size: 20px;
+            font-weight: bold; letter-spacing: 2px; text-transform: uppercase; z-index: 3002;
+            text-shadow: 0 2px 10px rgba(0,0,0,1); pointer-events: none;
         }
-
         #lightboxImg {
-            max-width: 90%;
-            max-height: 85vh;
-            object-fit: contain;
-            border-radius: 4px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            display: none; 
+            max-width: 90%; max-height: 85vh; object-fit: contain; border-radius: 4px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); display: none; 
         }
-        #lightboxLoader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+        #lightboxLoader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        /* --- 8. FOOTER --- */
         footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px 30px;
+            position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px 30px;
             background: linear-gradient(to top, rgba(0,0,0,1), transparent);
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            z-index: 100;
-            font-size: 12px;
-            color: #888;
-            pointer-events: none;
+            display: flex; justify-content: space-between; align-items: center; z-index: 100;
+            font-size: 12px; color: #888; pointer-events: none;
         }
         footer a, footer div { pointer-events: auto; }
 
-        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
             #cursor { display: none !important; }
             * { cursor: auto !important; }
-
             .brand-logo img { height: 40px; }
             .hero-logo-img { max-width: 250px; }
-            
             .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .modal-content.portfolio-content { width: 100%; height: 100%; border-radius: 0; padding: 70px 20px 20px 20px; }
-            
             footer { flex-direction: column; gap: 10px; text-align: center; background: #000; position: relative; padding-bottom: 80px; }
-            
             .float-wa { width: 50px; height: 50px; bottom: 20px; right: 20px; }
-            
-            #lightboxTitle {
-                font-size: 14px;
-                top: 25px;
-                left: 70px;
-                max-width: 70%;
-            }
-            
+            #lightboxTitle { font-size: 14px; top: 25px; left: 70px; max-width: 70%; }
             .menu-list { width: 100%; padding: 0 15px; }
         }
     </style>
@@ -682,7 +515,6 @@
         <div class="hero-content">
             <img src="logo_web.png" alt="USAHADULU LOGO" class="hero-logo-img">
             <p>EST. 2023 // DUMAI CITY</p>
-            
             <button class="cta-btn hover-target" onclick="openServicesFromHero()" data-i18n="hero_cta">START PROJECT</button>
         </div>
     </section>
@@ -704,8 +536,7 @@
         <div class="modal-content">
             <div class="close-modal hover-target" onclick="closeModal('aboutModal')">&times;</div>
             <h3 data-i18n="about_title">ABOUT US</h3>
-            <p id="aboutText" style="line-height: 1.6; color: #ccc; margin-top: 15px;">
-                </p>
+            <p id="aboutText" style="line-height: 1.6; color: #ccc; margin-top: 15px;"></p>
             <br>
             <p style="color: #666; font-size: 12px;">DUMAI, RIAU, INDONESIA.</p>
         </div>
@@ -715,23 +546,17 @@
         <div class="modal-content portfolio-content">
             <div class="close-modal hover-target" onclick="closeModal('portfolioModal')">&times;</div>
             <div class="modal-title" data-i18n="portfolio_title">PORTFOLIO</div>
-            
-            <div class="filter-container" id="filterContainer">
-                </div>
-
+            <div class="filter-container" id="filterContainer"></div>
             <div class="portfolio-scroll-area">
-                <div class="portfolio-grid" id="portfolioGrid">
-                    </div>
+                <div class="portfolio-grid" id="portfolioGrid"></div>
             </div>
         </div>
     </div>
 
     <div class="modal" id="lightboxModal">
         <div class="close-modal hover-target" onclick="closeLightboxOnly()">&times;</div>
-        
         <div class="modal-content-lightbox">
             <div id="lightboxTitle">DESIGN TITLE</div>
-            
             <img src="logo_web.png" alt="Loading..." id="lightboxLoader" class="loader-logo">
             <img id="lightboxImg" src="" alt="Full View">
         </div>
@@ -740,11 +565,11 @@
     <script>
         // --- 0. KONFIGURASI UMUM ---
         const appConfig = {
-            useLocalImages: false,  // false = pakai Unsplash, true = pakai folder 'img/'
-            localPath: 'img/',      // Nama folder tempat menyimpan gambar
+            useLocalImages: false,
+            localPath: 'img/',
         };
 
-        // --- 1. DATA STRUCTURE (JSON) ---
+        // --- 1. DATA STRUCTURE ---
         const siteData = {
             currentLang: 'id',
             translations: {
@@ -759,7 +584,8 @@
                     portfolio_title: "KARYA KAMI",
                     order_prefix: "Halo Admin USAHADULU, saya tertarik order ",
                     filter_all: "SEMUA",
-                    price_start: "Mulai"
+                    price_start: "Mulai",
+                    btn_order_now: "PESAN SEKARANG"
                 },
                 en: {
                     nav_services: "SERVICES",
@@ -772,18 +598,83 @@
                     portfolio_title: "OUR WORK",
                     order_prefix: "Hello Admin USAHADULU, I'm interested in ordering ",
                     filter_all: "ALL",
-                    price_start: "Start from"
+                    price_start: "Start from",
+                    btn_order_now: "ORDER NOW"
                 }
             },
             services: [
-                { id: 'logo', name_id: "LOGO & BRANDING", name_en: "LOGO & BRANDING", price: "IDR 250K" },
-                { id: 'apparel', name_id: "DESAIN KAOS/APPAREL", name_en: "APPAREL/T-SHIRT DESIGN", price: "IDR 150K" },
-                { id: 'flyer', name_id: "DESAIN POSTER/FLYER", name_en: "FLYER/POSTER DESIGN", price: "IDR 100K" },
-                { id: 'web', name_id: "WEB UNDANGAN DIGITAL", name_en: "WEB INVITATION", price: "IDR 300K" },
-                { id: 'video', name_id: "VIDEO & MOTION GRAPHIC", name_en: "VIDEO & MOTION GRAPHIC", price: "IDR 200K" }
+                { 
+                    id: 'logo', 
+                    name_id: "LOGO & BRANDING", 
+                    name_en: "LOGO & BRANDING", 
+                    price: "IDR 250K",
+                    desc_id: "Pembuatan identitas visual yang kuat. Cocok untuk brand baru yang ingin tampil beda.",
+                    desc_en: "Strong visual identity creation. Perfect for new brands wanting to stand out.",
+                    packages: [
+                        { item: "Basic (Logo Only)", price: "250K" },
+                        { item: "Standard (Logo + Mockup)", price: "450K" },
+                        { item: "Pro (Full Branding Kit)", price: "800K" },
+                        { item: "Re-drawing Vector", price: "150K" }
+                    ]
+                },
+                { 
+                    id: 'apparel', 
+                    name_id: "DESAIN KAOS/APPAREL", 
+                    name_en: "APPAREL/T-SHIRT DESIGN", 
+                    price: "IDR 150K",
+                    desc_id: "Desain ilustrasi untuk merchandise, kaos band, streetwear, dan clothing line.",
+                    desc_en: "Illustration design for merchandise, band tees, streetwear, and clothing lines.",
+                    packages: [
+                        { item: "Typography Design", price: "150K" },
+                        { item: "Simple Illustration", price: "300K" },
+                        { item: "Detailed / Metal Artwork", price: "600K" },
+                        { item: "Full Merch Pack (F/B/S)", price: "850K" }
+                    ]
+                },
+                { 
+                    id: 'flyer', 
+                    name_id: "DESAIN POSTER/FLYER", 
+                    name_en: "FLYER/POSTER DESIGN", 
+                    price: "IDR 100K",
+                    desc_id: "Media promosi digital untuk event, gig musik, atau promo produk di sosial media.",
+                    desc_en: "Digital promotional media for events, music gigs, or product promos on social media.",
+                    packages: [
+                        { item: "Instagram Feed/Story", price: "100K" },
+                        { item: "Event Poster A3", price: "200K" },
+                        { item: "Menu Design (1 Page)", price: "250K" },
+                        { item: "Banner / Billboard", price: "300K" }
+                    ]
+                },
+                { 
+                    id: 'web', 
+                    name_id: "WEB UNDANGAN DIGITAL", 
+                    name_en: "WEB INVITATION", 
+                    price: "IDR 300K",
+                    desc_id: "Undangan berbasis website yang elegan, modern, dan mudah disebarkan.",
+                    desc_en: "Elegant, modern, and easily shareable website-based invitations.",
+                    packages: [
+                        { item: "Basic Template", price: "300K" },
+                        { item: "Custom Theme", price: "600K" },
+                        { item: "Exclusive Domain (.com)", price: "+200K" },
+                        { item: "Prioritas Pengerjaan", price: "+100K" }
+                    ]
+                },
+                { 
+                    id: 'video', 
+                    name_id: "VIDEO & MOTION GRAPHIC", 
+                    name_en: "VIDEO & MOTION GRAPHIC", 
+                    price: "IDR 200K",
+                    desc_id: "Editing video kreatif untuk Reels, TikTok, atau intro YouTube yang dinamis.",
+                    desc_en: "Creative video editing for Reels, TikTok, or dynamic YouTube intros.",
+                    packages: [
+                        { item: "Simple Cut/Edit (1 min)", price: "200K" },
+                        { item: "Motion Graphic Intro", price: "350K" },
+                        { item: "Lyric Video", price: "500K" },
+                        { item: "Teaser Event", price: "400K" }
+                    ]
+                }
             ],
             
-            // --- PORTFOLIO DATA ---
             portfolio: [
                 { category: 'logo', title: 'NEON CYBERPUNK LOGO', fileName: 'logo_cyberpunk.jpg', demoUrl: 'https://images.unsplash.com/photo-1571120038865-c35012e1284a?auto=format&fit=crop&w=500&q=60' },
                 { category: 'apparel', title: 'MAGOS STREETWEAR V1', fileName: 'magos_v1.jpg', demoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=60' },
@@ -800,17 +691,13 @@
             filters: ['logo', 'apparel', 'web', 'video', 'flyer']
         };
 
-        // --- 2. INITIALIZATION & LANGUAGE LOGIC ---
+        // --- 2. INITIALIZATION ---
         function initSite() {
             updateLanguageUI();
             renderServices();
             renderPortfolio('all');
             renderFilters();
-            
-            // Set Default WA Link
             updateWALinks();
-            
-            // Setup Links Close
             setupExternalLinks();
         }
 
@@ -820,8 +707,8 @@
             toggleBtn.setAttribute('data-lang', siteData.currentLang);
             
             updateLanguageUI();
-            renderServices(); // Re-render services for lang change
-            renderFilters();  // Re-render filters (for "ALL" text)
+            renderServices(); 
+            renderFilters(); 
             updateWALinks();
         }
 
@@ -829,22 +716,17 @@
             const lang = siteData.currentLang;
             const t = siteData.translations[lang];
 
-            // Update text elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (t[key]) el.innerHTML = t[key]; // innerHTML allows bold tags
+                if (t[key]) el.innerHTML = t[key];
             });
-
-            // Update specific static content
             document.getElementById('aboutText').innerHTML = t.about_desc;
         }
 
         function updateWALinks() {
             const lang = siteData.currentLang;
-            const t = siteData.translations[lang];
             const phone = "6282283687565";
             const msg = encodeURIComponent(lang === 'id' ? "Halo, saya ingin bertanya jasa desain." : "Hello, I want to ask about design services.");
-            
             document.getElementById('waFloatBtn').href = `https://wa.me/${phone}?text=${msg}`;
         }
 
@@ -853,20 +735,77 @@
             const container = document.getElementById('dynamicServiceList');
             container.innerHTML = '';
             const lang = siteData.currentLang;
+            const t = siteData.translations[lang];
 
             siteData.services.forEach(svc => {
                 const name = lang === 'id' ? svc.name_id : svc.name_en;
-                const li = document.createElement('li');
-                li.className = 'service-list-item hover-target';
-                li.onclick = () => openOrderPopup(name);
+                const desc = lang === 'id' ? svc.desc_id : svc.desc_en;
                 
+                let tableRows = '';
+                svc.packages.forEach(pkg => {
+                    tableRows += `<tr><td>${pkg.item}</td><td>${pkg.price}</td></tr>`;
+                });
+
+                const li = document.createElement('li');
+                li.className = 'service-wrapper';
+                
+                // Added a wrapper div for the button to center it
                 li.innerHTML = `
-                    <span class="service-name">${name}</span>
-                    <span class="service-price">${siteData.translations[lang].price_start} ${svc.price}</span>
+                    <div class="service-header hover-target" onclick="toggleServiceItem(this)">
+                        <span class="service-name-main">${name}</span>
+                        <span class="service-icon-state">▼</span>
+                    </div>
+                    <div class="service-body">
+                        <p class="service-desc">${desc}</p>
+                        <table class="price-table">
+                            ${tableRows}
+                        </table>
+                        <div class="service-btn-wrapper">
+                            <button class="service-action-btn hover-target" onclick="openOrderPopup('${name}')">${t.btn_order_now}</button>
+                        </div>
+                    </div>
                 `;
                 container.appendChild(li);
             });
             bindHoverEvents();
+        }
+
+        // --- UPDATED ACCORDION LOGIC FOR SMOOTH NESTING ---
+        function toggleServiceItem(headerElement) {
+            headerElement.classList.toggle('active');
+            const body = headerElement.nextElementSibling;
+            
+            if (headerElement.classList.contains('active')) {
+                body.style.maxHeight = body.scrollHeight + "px";
+            } else {
+                body.style.maxHeight = null;
+            }
+
+            // Immediately update parent height to avoid lag
+            updateParentAccordion();
+            
+            // Double check after transition
+            setTimeout(updateParentAccordion, 600);
+        }
+
+        function updateParentAccordion() {
+            const parentContent = document.getElementById('serviceMenu').querySelector('.accordion-content');
+            // Hanya update jika menu utama sedang terbuka
+            if (parentContent.style.maxHeight && parentContent.style.maxHeight !== '0px') {
+                 // Set ke scrollHeight baru agar transisi mulus
+                parentContent.style.maxHeight = parentContent.scrollHeight + "px";
+            }
+        }
+
+        function toggleAccordion(id) {
+            const item = document.getElementById(id);
+            const content = item.querySelector('.accordion-content');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
         }
 
         // --- 4. PORTFOLIO & FILTERING LOGIC ---
@@ -876,14 +815,12 @@
             const lang = siteData.currentLang;
             const t = siteData.translations[lang];
 
-            // "ALL" Button
             const allBtn = document.createElement('button');
             allBtn.className = 'filter-btn hover-target active';
             allBtn.innerText = t.filter_all;
             allBtn.onclick = (e) => handleFilterClick(e, 'all');
             container.appendChild(allBtn);
 
-            // Dynamic Category Buttons
             siteData.filters.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn hover-target';
@@ -903,10 +840,7 @@
         function renderPortfolio(filterCategory) {
             const grid = document.getElementById('portfolioGrid');
             grid.innerHTML = '';
-
-            const items = filterCategory === 'all' 
-                ? siteData.portfolio 
-                : siteData.portfolio.filter(item => item.category === filterCategory);
+            const items = filterCategory === 'all' ? siteData.portfolio : siteData.portfolio.filter(item => item.category === filterCategory);
 
             if (items.length === 0) {
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#666;">No items found.</p>';
@@ -918,13 +852,7 @@
                 div.className = 'portfolio-item hover-target';
                 div.style.animationDelay = `${index * 0.1}s`;
                 
-                let finalSrc = "";
-                if (appConfig.useLocalImages) {
-                    finalSrc = appConfig.localPath + item.fileName;
-                } else {
-                    finalSrc = item.demoUrl;
-                }
-
+                let finalSrc = appConfig.useLocalImages ? appConfig.localPath + item.fileName : item.demoUrl;
                 div.onclick = () => openLightbox(finalSrc, item.title);
                 
                 div.innerHTML = `
@@ -933,16 +861,13 @@
                 `;
                 grid.appendChild(div);
             });
-
             bindHoverEvents();
         }
 
         // --- 5. INTERACTION & UTILS ---
-        
-        // Custom Cursor
         const cursor = document.getElementById('cursor');
         function bindHoverEvents() {
-            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch');
+            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .service-action-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch');
             hoverTargets.forEach(target => {
                 target.removeEventListener('mouseenter', null); 
                 target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
@@ -954,22 +879,17 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Modals & Navigation
         const menuBtn = document.getElementById('menuBtn');
         const navOverlay = document.getElementById('navOverlay');
         const mainHeader = document.getElementById('mainHeader');
 
-        // Toggle Menu Function
         function toggleMenu() {
             menuBtn.classList.toggle('active');
             navOverlay.classList.toggle('open');
             mainHeader.classList.toggle('menu-active');
-            
-            // Lock body scroll
             document.body.classList.toggle('no-scroll');
         }
 
-        // Close Menu Function
         function closeMenu() {
             menuBtn.classList.remove('active');
             navOverlay.classList.remove('open');
@@ -979,23 +899,10 @@
 
         menuBtn.addEventListener('click', toggleMenu);
 
-        // Close menu when clicking external links (e.g., Magos, IG)
         function setupExternalLinks() {
-            const links = document.querySelectorAll('.close-menu-link');
-            links.forEach(link => {
+            document.querySelectorAll('.close-menu-link').forEach(link => {
                 link.addEventListener('click', closeMenu);
             });
-        }
-
-        function toggleAccordion(id) {
-            const item = document.getElementById(id);
-            const content = item.querySelector('.accordion-content');
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
         }
 
         function openOrderPopup(serviceName) {
@@ -1006,22 +913,20 @@
             const message = encodeURIComponent(`${prefix}${serviceName}.`);
             document.getElementById('btnWA').href = `https://wa.me/6282283687565?text=${message}`;
             
-            closeMenu(); // Close menu first
+            closeMenu();
             document.getElementById('orderModal').classList.add('show');
         }
 
         function openPortfolioModal() {
-            // Reset to All when opening
             renderPortfolio('all');
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             document.querySelector('.filter-btn').classList.add('active');
-
-            closeMenu(); // Close menu first
+            closeMenu();
             document.getElementById('portfolioModal').classList.add('show');
         }
 
         function openAboutModal() {
-            closeMenu(); // Close menu first
+            closeMenu();
             document.getElementById('aboutModal').classList.add('show');
         }
 
@@ -1030,15 +935,17 @@
                 toggleMenu();
             }
             const serviceItem = document.getElementById('serviceMenu');
+            // If closed, open it
             const content = serviceItem.querySelector('.accordion-content');
-            content.style.maxHeight = content.scrollHeight + "px";
+            if (!content.style.maxHeight) {
+                toggleAccordion('serviceMenu');
+            }
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('show');
         }
 
-        // Lightbox
         function openLightbox(src, title) {
             const modal = document.getElementById('lightboxModal');
             const img = document.getElementById('lightboxImg');
@@ -1051,13 +958,10 @@
             loader.style.display = 'block';
 
             let displaySrc = src;
-
             if (!appConfig.useLocalImages && src.includes('unsplash')) {
                 displaySrc = src.replace('w=500', 'w=1600').replace('q=60', 'q=90');
             } 
-
             img.src = displaySrc;
-
             img.onload = () => {
                 loader.style.display = 'none'; 
                 img.style.display = 'block';   
@@ -1068,7 +972,6 @@
             document.getElementById('lightboxModal').classList.remove('show');
         }
 
-        // Global Click to Close
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 if (event.target.id === 'lightboxModal') {
@@ -1079,7 +982,6 @@
             }
         }
 
-        // Hero Slider
         const slides = document.querySelectorAll('.hero-slide');
         let currentSlide = 0;
         setInterval(() => {
@@ -1088,12 +990,10 @@
             slides[currentSlide].classList.add('active');
         }, 4000);
 
-        // Preloader
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.style.opacity = '0';
             preloader.style.visibility = 'hidden';
-            
             initSite();
         });
 
