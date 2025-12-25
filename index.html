@@ -39,7 +39,6 @@
             --text-color: #ffffff;
             --accent-color: #333333;
             --font-main: 'Inter', Helvetica, Arial, sans-serif;
-            /* Easing function untuk animasi yang lebih smooth */
             --ease-smooth: cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
@@ -77,6 +76,7 @@
             border-color: transparent;
         }
 
+        /* --- UPDATED PRELOADER CSS --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -86,12 +86,19 @@
             background-color: #000;
             z-index: 10000;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; /* Center Horizontal */
+            align-items: center;     /* Center Vertical */
             transition: opacity 0.8s ease, visibility 0.8s;
         }
         
-        .loader-logo { width: 80px; animation: pulse 1.5s infinite; }
+        .loader-logo { 
+            width: 120px; /* Sedikit lebih besar agar jelas */
+            max-width: 30vw; /* Responsive: maksimal 30% lebar layar device */
+            height: auto;
+            animation: pulse 1.5s infinite; 
+            object-fit: contain;
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.1); opacity: 1; }
@@ -119,7 +126,7 @@
             height: 50px;
             width: auto;
             display: block;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s ease; /* Tambah transisi opacity */
         }
         .brand-logo img:hover { transform: scale(1.05); }
 
@@ -191,11 +198,9 @@
         .accordion-content {
             max-height: 0; 
             overflow: hidden; 
-            /* Menggunakan cubic-bezier untuk animasi lipatan lebih smooth */
             transition: max-height 0.6s var(--ease-smooth);
         }
         
-        /* Service Accordion Styling */
         .service-wrapper {
             border-bottom: 1px dashed #333;
             margin-bottom: 5px;
@@ -221,7 +226,6 @@
         .service-body {
             max-height: 0;
             overflow: hidden;
-            /* Transisi smooth untuk sub-accordion */
             transition: max-height 0.6s var(--ease-smooth);
             text-align: left;
             background: #0a0a0a;
@@ -253,7 +257,6 @@
         }
         .price-table td:first-child { color: #aaa; }
 
-        /* --- UPDATED BUTTON STYLE (MATCHING HERO CTA) --- */
         .service-action-btn {
             display: inline-block;
             width: auto;
@@ -266,7 +269,7 @@
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
-            border-radius: 50px; /* Membuat bentuk kapsul/pill */
+            border-radius: 50px;
             transition: all 0.3s ease;
             margin-bottom: 25px;
             text-align: center;
@@ -277,11 +280,10 @@
         .service-action-btn:hover {
             background: #fff;
             color: #000;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5); /* Efek glow */
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
             transform: translateY(-2px);
         }
 
-        /* Center the button wrapper */
         .service-btn-wrapper {
             width: 100%;
             display: flex;
@@ -443,7 +445,7 @@
     <div id="cursor"></div>
 
     <div id="preloader">
-        <img src="logo_web.png" alt="Loading..." class="loader-logo">
+        <img src="logo_ambigram.png" alt="Loading..." class="loader-logo">
     </div>
 
     <a href="#" id="waFloatBtn" target="_blank" class="float-wa hover-target">
@@ -453,7 +455,7 @@
     <header id="mainHeader">
         <div class="header-left">
             <div class="brand-logo hover-target">
-                <img src="logo_web.png" alt="USAHADULU.COM">
+                <img id="headerLogoImg" src="logo_web.png" alt="USAHADULU.COM">
             </div>
         </div>
 
@@ -749,7 +751,6 @@
                 const li = document.createElement('li');
                 li.className = 'service-wrapper';
                 
-                // Added a wrapper div for the button to center it
                 li.innerHTML = `
                     <div class="service-header hover-target" onclick="toggleServiceItem(this)">
                         <span class="service-name-main">${name}</span>
@@ -770,7 +771,6 @@
             bindHoverEvents();
         }
 
-        // --- UPDATED ACCORDION LOGIC FOR SMOOTH NESTING ---
         function toggleServiceItem(headerElement) {
             headerElement.classList.toggle('active');
             const body = headerElement.nextElementSibling;
@@ -781,18 +781,13 @@
                 body.style.maxHeight = null;
             }
 
-            // Immediately update parent height to avoid lag
             updateParentAccordion();
-            
-            // Double check after transition
             setTimeout(updateParentAccordion, 600);
         }
 
         function updateParentAccordion() {
             const parentContent = document.getElementById('serviceMenu').querySelector('.accordion-content');
-            // Hanya update jika menu utama sedang terbuka
             if (parentContent.style.maxHeight && parentContent.style.maxHeight !== '0px') {
-                 // Set ke scrollHeight baru agar transisi mulus
                 parentContent.style.maxHeight = parentContent.scrollHeight + "px";
             }
         }
@@ -882,12 +877,21 @@
         const menuBtn = document.getElementById('menuBtn');
         const navOverlay = document.getElementById('navOverlay');
         const mainHeader = document.getElementById('mainHeader');
-
+        
+        // --- UPDATE 2: Logic Ganti Logo saat Toggle Menu ---
         function toggleMenu() {
             menuBtn.classList.toggle('active');
             navOverlay.classList.toggle('open');
             mainHeader.classList.toggle('menu-active');
             document.body.classList.toggle('no-scroll');
+
+            // Logic Logo Swap
+            const logoImg = document.getElementById('headerLogoImg');
+            if (navOverlay.classList.contains('open')) {
+                logoImg.src = 'logo_ambigram.png';
+            } else {
+                logoImg.src = 'logo_web.png';
+            }
         }
 
         function closeMenu() {
@@ -895,6 +899,9 @@
             navOverlay.classList.remove('open');
             mainHeader.classList.remove('menu-active');
             document.body.classList.remove('no-scroll');
+
+            // Kembalikan logo ke semula saat menu ditutup
+            document.getElementById('headerLogoImg').src = 'logo_web.png';
         }
 
         menuBtn.addEventListener('click', toggleMenu);
