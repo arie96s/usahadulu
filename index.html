@@ -76,7 +76,7 @@
             border-color: transparent;
         }
 
-        /* --- UPDATED PRELOADER CSS --- */
+        /* --- PRELOADER CSS --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -86,14 +86,14 @@
             background-color: #000;
             z-index: 10000;
             display: flex;
-            justify-content: center; /* Center Horizontal */
-            align-items: center;     /* Center Vertical */
+            justify-content: center;
+            align-items: center;
             transition: opacity 0.8s ease, visibility 0.8s;
         }
         
         .loader-logo { 
-            width: 120px; /* Sedikit lebih besar agar jelas */
-            max-width: 30vw; /* Responsive: maksimal 30% lebar layar device */
+            width: 120px;
+            max-width: 30vw;
             height: auto;
             animation: pulse 1.5s infinite; 
             object-fit: contain;
@@ -126,7 +126,7 @@
             height: 50px;
             width: auto;
             display: block;
-            transition: transform 0.3s ease, opacity 0.3s ease; /* Tambah transisi opacity */
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
         .brand-logo img:hover { transform: scale(1.05); }
 
@@ -200,7 +200,19 @@
             overflow: hidden; 
             transition: max-height 0.6s var(--ease-smooth);
         }
+
+        /* FAQ Styling */
+        .faq-wrapper {
+            text-align: left;
+            padding: 15px 10px;
+            color: #ccc;
+        }
+        .faq-item { margin-bottom: 20px; border-bottom: 1px dashed #333; padding-bottom: 15px; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q { color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 5px; display: block; }
+        .faq-a { font-size: 13px; line-height: 1.5; color: #888; }
         
+        /* Service & Others */
         .service-wrapper {
             border-bottom: 1px dashed #333;
             margin-bottom: 5px;
@@ -311,9 +323,15 @@
             max-width: 350px; width: 80%; height: auto;
             margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
         }
+        /* Update Font Style Hero sesuai Request */
         .hero-content p { 
-            font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; 
-            color: #ccc; margin-bottom: 25px;
+            font-size: 1rem; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            color: #ffffff; /* Ubah jadi putih */
+            font-weight: 900; /* Ubah jadi Bold */
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
 
         .cta-btn {
@@ -487,6 +505,14 @@
                 <div class="menu-title hover-target" onclick="openPortfolioModal()" data-i18n="nav_portfolio">PORTFOLIO</div>
             </li>
 
+            <li class="menu-item" id="faqMenu">
+                <div class="menu-title hover-target" onclick="toggleAccordion('faqMenu')" data-i18n="nav_faq">Q&A / FAQ</div>
+                <div class="accordion-content">
+                    <div class="faq-wrapper" id="faqContent">
+                        </div>
+                </div>
+            </li>
+
             <li class="menu-item">
                 <a href="https://arie96s.github.io/magosstreetwear" target="_blank" class="menu-title hover-target close-menu-link">MAGOS STREETWEAR</a>
             </li>
@@ -516,7 +542,7 @@
         
         <div class="hero-content">
             <img src="logo_web.png" alt="USAHADULU LOGO" class="hero-logo-img">
-            <p>EST. 2023 // DUMAI CITY</p>
+            <p data-i18n="hero_tagline">SOLUSI VISUAL PROFESIONAL UNTUK IDENTITAS BRAND ANDA</p>
             <button class="cta-btn hover-target" onclick="openServicesFromHero()" data-i18n="hero_cta">START PROJECT</button>
         </div>
     </section>
@@ -580,7 +606,9 @@
                     nav_portfolio: "PORTOFOLIO",
                     nav_contact: "KONTAK",
                     nav_about: "TENTANG",
+                    nav_faq: "TANYA JAWAB (FAQ)", // New Translation
                     hero_cta: "MULAI PROYEK",
+                    hero_tagline: "SOLUSI VISUAL PROFESIONAL UNTUK IDENTITAS BRAND ANDA", // New Copywriting
                     about_title: "TENTANG KAMI",
                     about_desc: "<strong>USAHADULU.COM</strong> adalah entitas kreatif yang bergerak di bidang visual digital. Fokus pada estetika underground, streetwear, dark arts, dan desain fungsional. Kami berbasis di Dumai.",
                     portfolio_title: "KARYA KAMI",
@@ -594,7 +622,9 @@
                     nav_portfolio: "PORTFOLIO",
                     nav_contact: "CONTACT",
                     nav_about: "ABOUT",
+                    nav_faq: "FAQ / Q&A", // New Translation
                     hero_cta: "START PROJECT",
+                    hero_tagline: "PROFESSIONAL VISUAL SOLUTIONS FOR YOUR BRAND IDENTITY", // New Copywriting
                     about_title: "ABOUT US",
                     about_desc: "<strong>USAHADULU.COM</strong> is a creative entity specializing in digital visuals. Focused on underground aesthetics, streetwear, dark arts, and functional design. Based in Dumai City.",
                     portfolio_title: "OUR WORK",
@@ -604,6 +634,33 @@
                     btn_order_now: "ORDER NOW"
                 }
             },
+            // DATA Q&A BARU
+            faq: [
+                {
+                    q_id: "Berapa lama proses pengerjaan?",
+                    a_id: "Estimasi 3-7 hari kerja tergantung antrian dan tingkat kesulitan. Prioritas pengerjaan tersedia dengan biaya tambahan.",
+                    q_en: "How long does the process take?",
+                    a_en: "Estimated 3-7 working days depending on queue and complexity. Priority service available with extra charge."
+                },
+                {
+                    q_id: "Apakah ada revisi?",
+                    a_id: "Kami memberikan 2x sesi revisi minor (perubahan warna/font) gratis. Revisi konsep total dikenakan biaya baru.",
+                    q_en: "Are revisions included?",
+                    a_en: "We provide 2x free minor revision sessions (color/font tweaks). Total concept revision requires a new fee."
+                },
+                {
+                    q_id: "File apa yang saya dapatkan?",
+                    a_id: "Anda akan mendapatkan file High-Res (JPG/PNG) dan File Master (AI/PSD/EPS) sesuai paket yang diambil.",
+                    q_en: "What files will I get?",
+                    a_en: "You will receive High-Res files (JPG/PNG) and Master Files (AI/PSD/EPS) according to the selected package."
+                },
+                {
+                    q_id: "Sistem Pembayaran?",
+                    a_id: "Wajib DP 50% di awal. Pelunasan dilakukan setelah preview desain disetujui, sebelum pengiriman file master.",
+                    q_en: "Payment System?",
+                    a_en: "50% Down Payment required upfront. Full payment is made after design preview approval, before master file delivery."
+                }
+            ],
             services: [
                 { 
                     id: 'logo', 
@@ -697,6 +754,7 @@
         function initSite() {
             updateLanguageUI();
             renderServices();
+            renderFAQ(); // Panggil fungsi render FAQ
             renderPortfolio('all');
             renderFilters();
             updateWALinks();
@@ -709,7 +767,8 @@
             toggleBtn.setAttribute('data-lang', siteData.currentLang);
             
             updateLanguageUI();
-            renderServices(); 
+            renderServices();
+            renderFAQ(); // Render ulang FAQ saat ganti bahasa
             renderFilters(); 
             updateWALinks();
         }
@@ -730,6 +789,26 @@
             const phone = "6282283687565";
             const msg = encodeURIComponent(lang === 'id' ? "Halo, saya ingin bertanya jasa desain." : "Hello, I want to ask about design services.");
             document.getElementById('waFloatBtn').href = `https://wa.me/${phone}?text=${msg}`;
+        }
+
+        // --- RENDER FAQ (NEW FEATURE) ---
+        function renderFAQ() {
+            const container = document.getElementById('faqContent');
+            container.innerHTML = '';
+            const lang = siteData.currentLang;
+
+            siteData.faq.forEach(item => {
+                const q = lang === 'id' ? item.q_id : item.q_en;
+                const a = lang === 'id' ? item.a_id : item.a_en;
+
+                const div = document.createElement('div');
+                div.className = 'faq-item';
+                div.innerHTML = `
+                    <span class="faq-q">${q}</span>
+                    <span class="faq-a">${a}</span>
+                `;
+                container.appendChild(div);
+            });
         }
 
         // --- 3. DYNAMIC SERVICES RENDERING ---
@@ -786,6 +865,7 @@
         }
 
         function updateParentAccordion() {
+            // Check both potential parents (Services or FAQ if it gets complex later)
             const parentContent = document.getElementById('serviceMenu').querySelector('.accordion-content');
             if (parentContent.style.maxHeight && parentContent.style.maxHeight !== '0px') {
                 parentContent.style.maxHeight = parentContent.scrollHeight + "px";
@@ -795,10 +875,16 @@
         function toggleAccordion(id) {
             const item = document.getElementById(id);
             const content = item.querySelector('.accordion-content');
+            
+            // Close others
+            const allContent = document.querySelectorAll('.accordion-content');
+            allContent.forEach(el => {
+                if (el !== content) el.style.maxHeight = null;
+            });
+
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {
-                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
                 content.style.maxHeight = content.scrollHeight + "px";
             }
         }
@@ -878,14 +964,12 @@
         const navOverlay = document.getElementById('navOverlay');
         const mainHeader = document.getElementById('mainHeader');
         
-        // --- UPDATE 2: Logic Ganti Logo saat Toggle Menu ---
         function toggleMenu() {
             menuBtn.classList.toggle('active');
             navOverlay.classList.toggle('open');
             mainHeader.classList.toggle('menu-active');
             document.body.classList.toggle('no-scroll');
 
-            // Logic Logo Swap
             const logoImg = document.getElementById('headerLogoImg');
             if (navOverlay.classList.contains('open')) {
                 logoImg.src = 'logo_ambigram.png';
@@ -899,8 +983,6 @@
             navOverlay.classList.remove('open');
             mainHeader.classList.remove('menu-active');
             document.body.classList.remove('no-scroll');
-
-            // Kembalikan logo ke semula saat menu ditutup
             document.getElementById('headerLogoImg').src = 'logo_web.png';
         }
 
@@ -942,7 +1024,6 @@
                 toggleMenu();
             }
             const serviceItem = document.getElementById('serviceMenu');
-            // If closed, open it
             const content = serviceItem.querySelector('.accordion-content');
             if (!content.style.maxHeight) {
                 toggleAccordion('serviceMenu');
