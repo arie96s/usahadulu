@@ -76,7 +76,7 @@
             border-color: transparent;
         }
 
-        /* --- PRELOADER CSS --- */
+        /* --- PRELOADER --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -194,120 +194,53 @@
         }
         .menu-title:hover { color: #888; }
 
-        /* Accordion Animations */
-        .accordion-content {
-            max-height: 0; 
-            overflow: hidden; 
-            transition: max-height 0.6s var(--ease-smooth);
-        }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease-smooth); }
 
         /* FAQ Styling */
-        .faq-wrapper {
-            text-align: left;
-            padding: 15px 10px;
-            color: #ccc;
-        }
+        .faq-wrapper { text-align: left; padding: 15px 10px; color: #ccc; }
         .faq-item { margin-bottom: 20px; border-bottom: 1px dashed #333; padding-bottom: 15px; }
         .faq-item:last-child { border-bottom: none; }
         .faq-q { color: #fff; font-weight: bold; font-size: 14px; margin-bottom: 5px; display: block; }
         .faq-a { font-size: 13px; line-height: 1.5; color: #888; }
-        
-        /* Service & Others */
-        .service-wrapper {
-            border-bottom: 1px dashed #333;
-            margin-bottom: 5px;
-        }
-        
+
+        /* Service Styling */
+        .service-wrapper { border-bottom: 1px dashed #333; margin-bottom: 5px; }
         .service-header {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            font-size: 16px;
-            color: #ccc;
-            transition: color 0.3s;
+            display: flex; justify-content: space-between; padding: 15px 0;
+            font-size: 16px; color: #ccc; transition: color 0.3s;
         }
         .service-header:hover { color: #fff; }
         .service-header.active { color: #fff; font-weight: bold; }
-        
-        .service-icon-state {
-            font-size: 12px;
-            transition: transform 0.4s var(--ease-smooth);
-        }
+        .service-icon-state { font-size: 12px; transition: transform 0.4s var(--ease-smooth); }
         .service-header.active .service-icon-state { transform: rotate(180deg); }
 
         .service-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s var(--ease-smooth);
-            text-align: left;
-            background: #0a0a0a;
-            padding: 0 10px;
+            max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease-smooth);
+            text-align: left; background: #0a0a0a; padding: 0 10px;
         }
+        .service-desc { font-size: 13px; color: #888; margin: 15px 0 20px 0; line-height: 1.6; font-style: italic; }
 
-        .service-desc {
-            font-size: 13px;
-            color: #888;
-            margin: 15px 0 20px 0;
-            line-height: 1.6;
-            font-style: italic;
-        }
-
-        .price-table {
-            width: 100%;
-            margin-bottom: 25px;
-            border-collapse: collapse;
-        }
-        .price-table td {
-            padding: 10px 0;
-            font-size: 13px;
-            border-bottom: 1px solid #222;
-        }
-        .price-table td:last-child {
-            text-align: right;
-            color: #fff;
-            font-family: monospace;
-        }
+        .price-table { width: 100%; margin-bottom: 25px; border-collapse: collapse; }
+        .price-table td { padding: 10px 0; font-size: 13px; border-bottom: 1px solid #222; }
+        .price-table td:last-child { text-align: right; color: #fff; font-family: monospace; }
         .price-table td:first-child { color: #aaa; }
 
         .service-action-btn {
-            display: inline-block;
-            width: auto;
-            min-width: 180px;
-            padding: 12px 30px;
-            background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            display: inline-block; width: auto; min-width: 180px; padding: 12px 30px;
+            background: transparent; border: 1px solid #fff; color: #fff;
+            font-size: 12px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;
+            border-radius: 50px; transition: all 0.3s ease; margin-bottom: 25px;
+            text-align: center; position: relative; overflow: hidden;
         }
-        
         .service-action-btn:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
-            transform: translateY(-2px);
+            background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.5); transform: translateY(-2px);
         }
+        .service-btn-wrapper { width: 100%; display: flex; justify-content: center; }
 
-        .service-btn-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .social-links a {
-            padding: 10px 0; display: block; font-size: 16px; color: #ccc;
-        }
+        .social-links a { padding: 10px 0; display: block; font-size: 16px; color: #ccc; }
         .social-links a:hover { color: #fff; text-decoration: underline; }
 
-        /* --- 5. HERO SECTION --- */
+        /* --- 5. HERO SECTION (UPDATED) --- */
         .hero {
             position: relative; height: 100vh; width: 100%; overflow: hidden;
             display: flex; justify-content: center; align-items: center;
@@ -319,19 +252,25 @@
         }
         .hero-slide.active { opacity: 0.5; }
         .hero-content { z-index: 2; text-align: center; padding: 20px; }
+        
         .hero-logo-img {
             max-width: 350px; width: 80%; height: auto;
-            margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+            /* Jarak bawah logo dikurangi agar tagline naik */
+            margin-bottom: 5px; 
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
         }
-        /* Update Font Style Hero sesuai Request */
+
+        /* Update Copywriting Font & Size */
         .hero-content p { 
-            font-size: 1rem; 
-            letter-spacing: 2px; 
+            font-family: var(--font-main); /* Menggunakan font Inter sama seperti yang lain */
+            font-size: 0.85rem; /* Ukuran diperkecil (sebelumnya 1rem) */
+            font-weight: 400; /* Regular/Normal weight (tidak tebal) */
+            letter-spacing: 3px; /* Spasi antar huruf agar elegan */
             text-transform: uppercase; 
-            color: #ffffff; /* Ubah jadi putih */
-            font-weight: 900; /* Ubah jadi Bold */
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            color: #ffffff; 
+            margin-bottom: 30px;
+            margin-top: 0px; /* Hapus margin top agar nempel ke logo */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
         .cta-btn {
@@ -606,9 +545,9 @@
                     nav_portfolio: "PORTOFOLIO",
                     nav_contact: "KONTAK",
                     nav_about: "TENTANG",
-                    nav_faq: "TANYA JAWAB (FAQ)", // New Translation
+                    nav_faq: "TANYA JAWAB (FAQ)",
                     hero_cta: "MULAI PROYEK",
-                    hero_tagline: "SOLUSI VISUAL PROFESIONAL UNTUK IDENTITAS BRAND ANDA", // New Copywriting
+                    hero_tagline: "SOLUSI VISUAL PROFESIONAL UNTUK IDENTITAS BRAND ANDA",
                     about_title: "TENTANG KAMI",
                     about_desc: "<strong>USAHADULU.COM</strong> adalah entitas kreatif yang bergerak di bidang visual digital. Fokus pada estetika underground, streetwear, dark arts, dan desain fungsional. Kami berbasis di Dumai.",
                     portfolio_title: "KARYA KAMI",
@@ -622,9 +561,9 @@
                     nav_portfolio: "PORTFOLIO",
                     nav_contact: "CONTACT",
                     nav_about: "ABOUT",
-                    nav_faq: "FAQ / Q&A", // New Translation
+                    nav_faq: "FAQ / Q&A",
                     hero_cta: "START PROJECT",
-                    hero_tagline: "PROFESSIONAL VISUAL SOLUTIONS FOR YOUR BRAND IDENTITY", // New Copywriting
+                    hero_tagline: "PROFESSIONAL VISUAL SOLUTIONS FOR YOUR BRAND IDENTITY",
                     about_title: "ABOUT US",
                     about_desc: "<strong>USAHADULU.COM</strong> is a creative entity specializing in digital visuals. Focused on underground aesthetics, streetwear, dark arts, and functional design. Based in Dumai City.",
                     portfolio_title: "OUR WORK",
@@ -634,7 +573,6 @@
                     btn_order_now: "ORDER NOW"
                 }
             },
-            // DATA Q&A BARU
             faq: [
                 {
                     q_id: "Berapa lama proses pengerjaan?",
@@ -754,7 +692,7 @@
         function initSite() {
             updateLanguageUI();
             renderServices();
-            renderFAQ(); // Panggil fungsi render FAQ
+            renderFAQ();
             renderPortfolio('all');
             renderFilters();
             updateWALinks();
@@ -765,10 +703,9 @@
             siteData.currentLang = siteData.currentLang === 'id' ? 'en' : 'id';
             const toggleBtn = document.getElementById('langToggle');
             toggleBtn.setAttribute('data-lang', siteData.currentLang);
-            
             updateLanguageUI();
             renderServices();
-            renderFAQ(); // Render ulang FAQ saat ganti bahasa
+            renderFAQ();
             renderFilters(); 
             updateWALinks();
         }
@@ -776,7 +713,6 @@
         function updateLanguageUI() {
             const lang = siteData.currentLang;
             const t = siteData.translations[lang];
-
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.innerHTML = t[key];
@@ -791,45 +727,32 @@
             document.getElementById('waFloatBtn').href = `https://wa.me/${phone}?text=${msg}`;
         }
 
-        // --- RENDER FAQ (NEW FEATURE) ---
         function renderFAQ() {
             const container = document.getElementById('faqContent');
             container.innerHTML = '';
             const lang = siteData.currentLang;
-
             siteData.faq.forEach(item => {
                 const q = lang === 'id' ? item.q_id : item.q_en;
                 const a = lang === 'id' ? item.a_id : item.a_en;
-
                 const div = document.createElement('div');
                 div.className = 'faq-item';
-                div.innerHTML = `
-                    <span class="faq-q">${q}</span>
-                    <span class="faq-a">${a}</span>
-                `;
+                div.innerHTML = `<span class="faq-q">${q}</span><span class="faq-a">${a}</span>`;
                 container.appendChild(div);
             });
         }
 
-        // --- 3. DYNAMIC SERVICES RENDERING ---
         function renderServices() {
             const container = document.getElementById('dynamicServiceList');
             container.innerHTML = '';
             const lang = siteData.currentLang;
             const t = siteData.translations[lang];
-
             siteData.services.forEach(svc => {
                 const name = lang === 'id' ? svc.name_id : svc.name_en;
                 const desc = lang === 'id' ? svc.desc_id : svc.desc_en;
-                
                 let tableRows = '';
-                svc.packages.forEach(pkg => {
-                    tableRows += `<tr><td>${pkg.item}</td><td>${pkg.price}</td></tr>`;
-                });
-
+                svc.packages.forEach(pkg => { tableRows += `<tr><td>${pkg.item}</td><td>${pkg.price}</td></tr>`; });
                 const li = document.createElement('li');
                 li.className = 'service-wrapper';
-                
                 li.innerHTML = `
                     <div class="service-header hover-target" onclick="toggleServiceItem(this)">
                         <span class="service-name-main">${name}</span>
@@ -837,14 +760,11 @@
                     </div>
                     <div class="service-body">
                         <p class="service-desc">${desc}</p>
-                        <table class="price-table">
-                            ${tableRows}
-                        </table>
+                        <table class="price-table">${tableRows}</table>
                         <div class="service-btn-wrapper">
                             <button class="service-action-btn hover-target" onclick="openOrderPopup('${name}')">${t.btn_order_now}</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 container.appendChild(li);
             });
             bindHoverEvents();
@@ -853,19 +773,16 @@
         function toggleServiceItem(headerElement) {
             headerElement.classList.toggle('active');
             const body = headerElement.nextElementSibling;
-            
             if (headerElement.classList.contains('active')) {
                 body.style.maxHeight = body.scrollHeight + "px";
             } else {
                 body.style.maxHeight = null;
             }
-
             updateParentAccordion();
             setTimeout(updateParentAccordion, 600);
         }
 
         function updateParentAccordion() {
-            // Check both potential parents (Services or FAQ if it gets complex later)
             const parentContent = document.getElementById('serviceMenu').querySelector('.accordion-content');
             if (parentContent.style.maxHeight && parentContent.style.maxHeight !== '0px') {
                 parentContent.style.maxHeight = parentContent.scrollHeight + "px";
@@ -875,13 +792,8 @@
         function toggleAccordion(id) {
             const item = document.getElementById(id);
             const content = item.querySelector('.accordion-content');
-            
-            // Close others
             const allContent = document.querySelectorAll('.accordion-content');
-            allContent.forEach(el => {
-                if (el !== content) el.style.maxHeight = null;
-            });
-
+            allContent.forEach(el => { if (el !== content) el.style.maxHeight = null; });
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {
@@ -889,19 +801,16 @@
             }
         }
 
-        // --- 4. PORTFOLIO & FILTERING LOGIC ---
         function renderFilters() {
             const container = document.getElementById('filterContainer');
             container.innerHTML = '';
             const lang = siteData.currentLang;
             const t = siteData.translations[lang];
-
             const allBtn = document.createElement('button');
             allBtn.className = 'filter-btn hover-target active';
             allBtn.innerText = t.filter_all;
             allBtn.onclick = (e) => handleFilterClick(e, 'all');
             container.appendChild(allBtn);
-
             siteData.filters.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn hover-target';
@@ -922,30 +831,22 @@
             const grid = document.getElementById('portfolioGrid');
             grid.innerHTML = '';
             const items = filterCategory === 'all' ? siteData.portfolio : siteData.portfolio.filter(item => item.category === filterCategory);
-
             if (items.length === 0) {
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#666;">No items found.</p>';
                 return;
             }
-
             items.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'portfolio-item hover-target';
                 div.style.animationDelay = `${index * 0.1}s`;
-                
                 let finalSrc = appConfig.useLocalImages ? appConfig.localPath + item.fileName : item.demoUrl;
                 div.onclick = () => openLightbox(finalSrc, item.title);
-                
-                div.innerHTML = `
-                    <img src="${finalSrc}" alt="${item.title}">
-                    <div class="portfolio-tag">${item.category.toUpperCase()}</div>
-                `;
+                div.innerHTML = `<img src="${finalSrc}" alt="${item.title}"><div class="portfolio-tag">${item.category.toUpperCase()}</div>`;
                 grid.appendChild(div);
             });
             bindHoverEvents();
         }
 
-        // --- 5. INTERACTION & UTILS ---
         const cursor = document.getElementById('cursor');
         function bindHoverEvents() {
             const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .service-action-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch');
@@ -969,7 +870,6 @@
             navOverlay.classList.toggle('open');
             mainHeader.classList.toggle('menu-active');
             document.body.classList.toggle('no-scroll');
-
             const logoImg = document.getElementById('headerLogoImg');
             if (navOverlay.classList.contains('open')) {
                 logoImg.src = 'logo_ambigram.png';
@@ -987,21 +887,16 @@
         }
 
         menuBtn.addEventListener('click', toggleMenu);
-
         function setupExternalLinks() {
-            document.querySelectorAll('.close-menu-link').forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
+            document.querySelectorAll('.close-menu-link').forEach(link => { link.addEventListener('click', closeMenu); });
         }
 
         function openOrderPopup(serviceName) {
             document.getElementById('orderTitle').innerText = "ORDER: " + serviceName;
             const lang = siteData.currentLang;
             const prefix = siteData.translations[lang].order_prefix;
-            
             const message = encodeURIComponent(`${prefix}${serviceName}.`);
             document.getElementById('btnWA').href = `https://wa.me/6282283687565?text=${message}`;
-            
             closeMenu();
             document.getElementById('orderModal').classList.add('show');
         }
@@ -1020,53 +915,37 @@
         }
 
         function openServicesFromHero() {
-            if (!navOverlay.classList.contains('open')) {
-                toggleMenu();
-            }
+            if (!navOverlay.classList.contains('open')) { toggleMenu(); }
             const serviceItem = document.getElementById('serviceMenu');
             const content = serviceItem.querySelector('.accordion-content');
-            if (!content.style.maxHeight) {
-                toggleAccordion('serviceMenu');
-            }
+            if (!content.style.maxHeight) { toggleAccordion('serviceMenu'); }
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
+        function closeModal(modalId) { document.getElementById(modalId).classList.remove('show'); }
 
         function openLightbox(src, title) {
             const modal = document.getElementById('lightboxModal');
             const img = document.getElementById('lightboxImg');
             const loader = document.getElementById('lightboxLoader');
             const titleEl = document.getElementById('lightboxTitle');
-
             titleEl.innerText = title || "DESIGN PREVIEW";
             modal.classList.add('show');
             img.style.display = 'none';
             loader.style.display = 'block';
-
             let displaySrc = src;
             if (!appConfig.useLocalImages && src.includes('unsplash')) {
                 displaySrc = src.replace('w=500', 'w=1600').replace('q=60', 'q=90');
             } 
             img.src = displaySrc;
-            img.onload = () => {
-                loader.style.display = 'none'; 
-                img.style.display = 'block';   
-            };
+            img.onload = () => { loader.style.display = 'none'; img.style.display = 'block'; };
         }
 
-        function closeLightboxOnly() {
-            document.getElementById('lightboxModal').classList.remove('show');
-        }
+        function closeLightboxOnly() { document.getElementById('lightboxModal').classList.remove('show'); }
 
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
-                if (event.target.id === 'lightboxModal') {
-                    closeLightboxOnly(); 
-                } else {
-                    event.target.classList.remove('show');
-                }
+                if (event.target.id === 'lightboxModal') { closeLightboxOnly(); } 
+                else { event.target.classList.remove('show'); }
             }
         }
 
@@ -1084,7 +963,6 @@
             preloader.style.visibility = 'hidden';
             initSite();
         });
-
     </script>
 </body>
 </html>
