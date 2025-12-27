@@ -365,6 +365,93 @@
         }
         .order-btn:hover { background: #fff; color: #000; }
 
+        /* --- PAYMENT ACCORDION STYLES (MODIFIED) --- */
+        .payment-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .payment-category {
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #111;
+            transition: border-color 0.3s;
+        }
+        .payment-category:hover { border-color: #555; }
+
+        .payment-cat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            background: #1a1a1a;
+            cursor: pointer; /* Force pointer for UX */
+        }
+        .payment-cat-header:hover { background: #222; }
+        
+        .payment-cat-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .payment-cat-icon {
+            font-size: 12px;
+            transition: transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        .payment-cat-header.active .payment-cat-icon { transform: rotate(180deg); }
+
+        .payment-cat-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+            background: #0d0d0d;
+        }
+        
+        .payment-item {
+            padding: 15px 20px;
+            border-bottom: 1px dashed #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .payment-item:last-child { border-bottom: none; }
+        
+        .bank-info { display: flex; flex-direction: column; gap: 4px; }
+        .bank-name { font-size: 13px; font-weight: bold; color: #fff; }
+        .bank-number { font-family: monospace; font-size: 14px; color: #aaa; letter-spacing: 1px; }
+        .bank-holder { font-size: 10px; color: #666; text-transform: uppercase; }
+
+        .copy-btn {
+            background: transparent; border: 1px solid #555; color: #aaa;
+            padding: 6px 12px; border-radius: 6px; font-size: 10px;
+            text-transform: uppercase; transition: all 0.3s;
+        }
+        .copy-btn:hover { background: #fff; color: #000; border-color: #fff; }
+
+        .qris-wrapper { padding: 30px; text-align: center; background: #fff; border-radius: 8px; margin: 20px; }
+        .qris-placeholder { 
+            width: 150px; height: 150px; background: #000; margin: 0 auto; 
+            display: flex; justify-content: center; align-items: center; 
+            color: #fff; font-weight: bold; 
+        }
+
+        .payment-instruction {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #333;
+            background: #0a0a0a;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.6;
+            text-align: left;
+        }
+        .payment-instruction strong { color: #fff; display: block; margin-bottom: 5px; text-transform: uppercase; }
+
         /* LIGHTBOX */
         #lightboxModal { z-index: 3000; background: rgba(0,0,0,0.98); }
         #lightboxModal .modal-content-lightbox {
@@ -451,6 +538,10 @@
             <li class="menu-item">
                 <div class="menu-title hover-target" onclick="openPortfolioModal()" data-i18n="nav_portfolio">PORTFOLIO</div>
             </li>
+            
+            <li class="menu-item">
+                <div class="menu-title hover-target" onclick="openPaymentModal()" data-i18n="nav_payment">PAYMENT METHODS</div>
+            </li>
 
             <li class="menu-item">
                 <div class="menu-title hover-target" onclick="openTestimonialModal()" data-i18n="nav_testimonials">CLIENTS & TESTIMONIALS</div>
@@ -523,6 +614,24 @@
         </div>
     </div>
 
+    <div class="modal" id="paymentModal">
+        <div class="modal-content portfolio-content">
+            <div class="close-modal hover-target" onclick="closeModal('paymentModal')">&times;</div>
+            <div class="modal-title" data-i18n="payment_title">METODE PEMBAYARAN</div>
+            
+            <div class="portfolio-scroll-area">
+                <div class="payment-list-container" id="paymentList"></div>
+                
+                <div class="payment-instruction">
+                    <strong data-i18n="pay_instruct_title">INSTRUKSI KONFIRMASI:</strong>
+                    <span data-i18n="pay_instruct_text">
+                        Harap melakukan konfirmasi pembayaran dengan melampirkan bukti transfer melalui WhatsApp resmi kami untuk mempercepat proses verifikasi pesanan Anda.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="portfolioModal">
         <div class="modal-content portfolio-content">
             <div class="close-modal hover-target" onclick="closeModal('portfolioModal')">&times;</div>
@@ -571,9 +680,13 @@
                     nav_contact: "KONTAK",
                     nav_about: "TENTANG",
                     nav_faq: "TANYA JAWAB (FAQ)",
+                    nav_payment: "METODE PEMBAYARAN",
                     hero_cta: "MULAI PROYEK",
                     hero_tagline: "SOLUSI VISUAL PROFESIONAL UNTUK IDENTITAS BRAND ANDA",
                     about_title: "TENTANG KAMI",
+                    payment_title: "METODE PEMBAYARAN",
+                    pay_instruct_title: "INSTRUKSI KONFIRMASI:",
+                    pay_instruct_text: "Harap melakukan konfirmasi pembayaran dengan melampirkan bukti transfer melalui WhatsApp resmi kami untuk mempercepat proses verifikasi pesanan Anda.",
                     about_desc: "<strong>USAHADULU.COM</strong> adalah entitas kreatif yang bergerak di bidang visual digital. Fokus pada estetika underground, streetwear, dark arts, dan desain fungsional. Kami berbasis di Dumai.",
                     portfolio_title: "KARYA KAMI",
                     order_prefix: "Halo Admin USAHADULU, saya tertarik order ",
@@ -588,9 +701,13 @@
                     nav_contact: "CONTACT",
                     nav_about: "ABOUT",
                     nav_faq: "FAQ / Q&A",
+                    nav_payment: "PAYMENT METHODS",
                     hero_cta: "START PROJECT",
                     hero_tagline: "PROFESSIONAL VISUAL SOLUTIONS FOR YOUR BRAND IDENTITY",
                     about_title: "ABOUT US",
+                    payment_title: "PAYMENT METHODS",
+                    pay_instruct_title: "CONFIRMATION INSTRUCTION:",
+                    pay_instruct_text: "Please confirm your payment by attaching the transfer receipt via our official WhatsApp to expedite your order verification process.",
                     about_desc: "<strong>USAHADULU.COM</strong> is a creative entity specializing in digital visuals. Focused on underground aesthetics, streetwear, dark arts, and functional design. Based in Dumai City.",
                     portfolio_title: "OUR WORK",
                     order_prefix: "Hello Admin USAHADULU, I'm interested in ordering ",
@@ -717,17 +834,32 @@
                 { name: "Siska Wijaya", brand: "Cafe Senja Dumai", quote: "Pengerjaan logo dan daftar menu sangat cepat. Revisi dilayani dengan ramah sampai sesuai keinginan." },
                 { name: "Rian Ardiansyah", brand: "Street Rebels", quote: "Sudah 3x order desain kaos di sini. Selalu puas sama hasilnya. Konsep metalnya orisinil." },
                 { name: "Putri Anggraini", brand: "Wedding Client", quote: "Undangan digitalnya elegan dan smooth banget animasinya. Tamu-tamu pada suka!" }
+            ],
+            // EXPANDED PAYMENT DATA (CATEGORIZED)
+            payments: [
+                { cat: "BANK HIMBARA (STATE-OWNED)", type: "MANDIRI", number: "108-000-xxxx-xxx", holder: "Ariezona Creative" },
+                { cat: "BANK HIMBARA (STATE-OWNED)", type: "BRI", number: "5371-01-xxxxxx-53-x", holder: "Ariezona Creative" },
+                { cat: "BANK HIMBARA (STATE-OWNED)", type: "BNI", number: "098-xxxx-xxx", holder: "Ariezona Creative" },
+                { cat: "PRIVATE BANK (CONVENTIONAL)", type: "BCA", number: "8000-xxxx-xx", holder: "Ariezona Creative" },
+                { cat: "DIGITAL BANK", type: "BANK JAGO", number: "1092-xxxx-xxxx", holder: "Ariezona Creative" },
+                { cat: "DIGITAL BANK", type: "SEABANK", number: "9019-xxxx-xxxx", holder: "Ariezona Creative" },
+                { cat: "E-WALLET", type: "DANA", number: "0822-8368-7565", holder: "Ariezona Creative" },
+                { cat: "E-WALLET", type: "GOPAY", number: "0822-8368-7565", holder: "Ariezona Creative" },
+                { cat: "E-WALLET", type: "OVO", number: "0822-8368-7565", holder: "Ariezona Creative" },
+                { cat: "E-WALLET", type: "SHOPEEPAY", number: "0822-8368-7565", holder: "Ariezona Creative" },
+                { cat: "QRIS", type: "ALL PAYMENT", number: "SCAN", holder: "Ariezona Creative" },
+                { cat: "INTERNATIONAL", type: "PAYPAL", number: "paypal.me/arie96s", holder: "Ariezona Creative" }
             ]
         };
 
         // --- 2. INITIALIZATION ---
         function initSite() {
-            // updateLanguageUI() tidak dipanggil di awal untuk 'id' agar teks hardcoded SEO tidak tertimpa
             renderServices();
             renderFAQ();
             renderPortfolio('all');
             renderFilters();
-            renderTestimonials(); // New Function
+            renderTestimonials(); 
+            renderPayments(); 
             updateWALinks();
             setupExternalLinks();
         }
@@ -740,6 +872,7 @@
             renderServices();
             renderFAQ();
             renderFilters(); 
+            renderPayments();
             updateWALinks();
         }
 
@@ -750,7 +883,6 @@
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.innerHTML = t[key];
             });
-            // Teks About hanya diubah lewat JS jika bahasa berganti
             document.getElementById('aboutText').innerHTML = t.about_desc;
         }
 
@@ -802,6 +934,75 @@
                 container.appendChild(li);
             });
             bindHoverEvents();
+        }
+
+        function renderPayments() {
+            const container = document.getElementById('paymentList');
+            container.innerHTML = '';
+            
+            // Group by Category
+            const categories = {};
+            siteData.payments.forEach(pay => {
+                if (!categories[pay.cat]) categories[pay.cat] = [];
+                categories[pay.cat].push(pay);
+            });
+
+            for (const [catName, items] of Object.entries(categories)) {
+                // Create Category Header
+                const catDiv = document.createElement('div');
+                catDiv.className = 'payment-category';
+                
+                let itemsHtml = '';
+                items.forEach(item => {
+                    if (item.cat === 'QRIS') {
+                        itemsHtml += `
+                            <div class="qris-wrapper">
+                                <div class="qris-placeholder">QR CODE</div>
+                                <span style="font-size:12px; font-weight:bold; color:#000; display:block; margin-top:10px;">SCAN QRIS</span>
+                            </div>
+                        `;
+                    } else {
+                        itemsHtml += `
+                            <div class="payment-item hover-target">
+                                <div class="bank-info">
+                                    <span class="bank-name">${item.type}</span>
+                                    <span class="bank-number">${item.number}</span>
+                                    <span class="bank-holder">A.N ${item.holder}</span>
+                                </div>
+                                <button class="copy-btn hover-target" onclick="copyText('${item.number}')">COPY</button>
+                            </div>
+                        `;
+                    }
+                });
+
+                catDiv.innerHTML = `
+                    <div class="payment-cat-header hover-target" onclick="togglePaymentCategory(this)">
+                        <span class="payment-cat-title">${catName}</span>
+                        <span class="payment-cat-icon">▼</span>
+                    </div>
+                    <div class="payment-cat-body">
+                        ${itemsHtml}
+                    </div>
+                `;
+                container.appendChild(catDiv);
+            }
+            bindHoverEvents();
+        }
+
+        function togglePaymentCategory(header) {
+            header.classList.toggle('active');
+            const body = header.nextElementSibling;
+            if (header.classList.contains('active')) {
+                body.style.maxHeight = body.scrollHeight + "px";
+            } else {
+                body.style.maxHeight = null;
+            }
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copied: " + text);
+            });
         }
 
         function toggleServiceItem(headerElement) {
@@ -875,8 +1076,6 @@
                 div.style.animationDelay = `${index * 0.1}s`;
                 let finalSrc = appConfig.useLocalImages ? appConfig.localPath + item.fileName : item.demoUrl;
                 div.onclick = () => openLightbox(finalSrc, item.title);
-                
-                // LAZY LOADING IMPLEMENTATION
                 div.innerHTML = `<img src="${finalSrc}" alt="${item.title}" loading="lazy" width="500" height="500"><div class="portfolio-tag">${item.category.toUpperCase()}</div>`;
                 grid.appendChild(div);
             });
@@ -900,7 +1099,7 @@
 
         const cursor = document.getElementById('cursor');
         function bindHoverEvents() {
-            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .service-action-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch, .testi-card');
+            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .service-action-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch, .testi-card, .payment-cat-header, .payment-item, .copy-btn');
             hoverTargets.forEach(target => {
                 target.removeEventListener('mouseenter', null); 
                 target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
@@ -958,6 +1157,12 @@
             document.querySelector('.filter-btn').classList.add('active');
             closeMenu();
             document.getElementById('portfolioModal').classList.add('show');
+        }
+
+        function openPaymentModal() {
+            closeMenu();
+            renderPayments(); 
+            document.getElementById('paymentModal').classList.add('show');
         }
 
         function openTestimonialModal() {
