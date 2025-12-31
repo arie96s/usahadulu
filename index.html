@@ -12,7 +12,7 @@
     
     <meta property="og:title" content="USAHADULU STUDIO - Digital Creative Services">
     <meta property="og:description" content="Visual Solution for Underground & Streetwear Brands.">
-    <meta property="og:image" content="logo_web.png">
+    <meta property="og:image" content="logo_ambigram.png">
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" href="logo_web.png">
@@ -346,7 +346,79 @@
             padding: 3px 8px; font-size: 10px; border-radius: 4px; backdrop-filter: blur(2px);
         }
         
-        /* TESTIMONIAL GRID */
+        /* TESTIMONIAL GRID & FORM STYLES (NEW) */
+        .review-input-section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .star-rating-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 30px;
+            cursor: none;
+        }
+        .star-icon {
+            color: #444;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .star-icon:hover, .star-icon.active {
+            color: #ffd700;
+            transform: scale(1.2);
+        }
+        
+        .review-form-container {
+            display: none; /* Hidden initially */
+            margin-top: 20px;
+            text-align: left;
+            animation: slideDown 0.5s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .review-input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #444;
+            padding: 12px;
+            color: #fff;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            font-family: var(--font-main);
+            font-size: 13px;
+        }
+        .review-input:focus { border-color: #fff; outline: none; }
+        
+        .char-counter {
+            text-align: right;
+            font-size: 10px;
+            color: #666;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .submit-review-btn {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        .submit-review-btn:hover { background: #ccc; }
+
         .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding-bottom: 20px; text-align: left; }
         .testi-card { background: #222; padding: 25px; border: 1px dashed #444; border-radius: 8px; transition: transform 0.3s, border-color 0.3s; }
         .testi-card:hover { transform: translateY(-5px); border-color: #fff; }
@@ -365,7 +437,7 @@
         }
         .order-btn:hover { background: #fff; color: #000; }
 
-        /* --- PAYMENT ACCORDION STYLES (MODIFIED) --- */
+        /* --- PAYMENT ACCORDION STYLES --- */
         .payment-list-container {
             display: flex;
             flex-direction: column;
@@ -387,7 +459,7 @@
             align-items: center;
             padding: 18px 20px;
             background: #1a1a1a;
-            cursor: pointer; /* Force pointer for UX */
+            cursor: pointer;
         }
         .payment-cat-header:hover { background: #222; }
         
@@ -507,7 +579,7 @@
     <header id="mainHeader">
         <div class="header-left">
             <div class="brand-logo hover-target">
-                <img id="headerLogoImg" src="logo_web.png" alt="USAHADULU.COM">
+                <img id="headerLogoImg" src="logo_ambigram.png" alt="USAHADULU.COM">
             </div>
         </div>
 
@@ -647,7 +719,27 @@
         <div class="modal-content portfolio-content">
             <div class="close-modal hover-target" onclick="closeModal('testimonialModal')">&times;</div>
             <div class="modal-title" data-i18n="nav_testimonials">CLIENTS & REVIEWS</div>
+            
             <div class="portfolio-scroll-area">
+                <div class="review-input-section">
+                    <span style="font-size:12px; color:#888; letter-spacing:1px; text-transform:uppercase;">BERIKAN PENILAIAN ANDA</span>
+                    <div class="star-rating-container" id="starRatingContainer">
+                        <span class="star-icon hover-target" data-val="1">★</span>
+                        <span class="star-icon hover-target" data-val="2">★</span>
+                        <span class="star-icon hover-target" data-val="3">★</span>
+                        <span class="star-icon hover-target" data-val="4">★</span>
+                        <span class="star-icon hover-target" data-val="5">★</span>
+                    </div>
+
+                    <div class="review-form-container" id="reviewFormContainer">
+                        <input type="text" id="reviewName" class="review-input hover-target" placeholder="Nama Anda (Cth: Budi - Distro X)" required>
+                        <input type="text" id="reviewType" class="review-input hover-target" placeholder="Jenis Order (Cth: Logo Design)" required>
+                        <textarea id="reviewComment" class="review-input hover-target" rows="3" placeholder="Tulis pengalaman Anda..." maxlength="150" oninput="updateCharCount()"></textarea>
+                        <span id="charCount" class="char-counter">0 / 150</span>
+                        <button class="submit-review-btn hover-target" onclick="submitReview()">KIRIM ULASAN</button>
+                    </div>
+                </div>
+
                 <div class="testimonial-grid" id="testimonialGrid"></div>
             </div>
         </div>
@@ -835,7 +927,6 @@
                 { name: "Rian Ardiansyah", brand: "Street Rebels", quote: "Sudah 3x order desain kaos di sini. Selalu puas sama hasilnya. Konsep metalnya orisinil." },
                 { name: "Putri Anggraini", brand: "Wedding Client", quote: "Undangan digitalnya elegan dan smooth banget animasinya. Tamu-tamu pada suka!" }
             ],
-            // EXPANDED PAYMENT DATA (CATEGORIZED)
             payments: [
                 { cat: "BANK HIMBARA (STATE-OWNED)", type: "MANDIRI", number: "108-000-xxxx-xxx", holder: "Ariezona Creative" },
                 { cat: "BANK HIMBARA (STATE-OWNED)", type: "BRI", number: "5371-01-xxxxxx-53-x", holder: "Ariezona Creative" },
@@ -862,6 +953,7 @@
             renderPayments(); 
             updateWALinks();
             setupExternalLinks();
+            setupReviewStars(); // Init Review System
         }
 
         function toggleLanguage() {
@@ -948,7 +1040,6 @@
             });
 
             for (const [catName, items] of Object.entries(categories)) {
-                // Create Category Header
                 const catDiv = document.createElement('div');
                 catDiv.className = 'payment-category';
                 
@@ -1097,9 +1188,60 @@
             });
         }
 
+        /* --- REVIEW SYSTEM LOGIC (NEW) --- */
+        let currentRating = 0;
+
+        function setupReviewStars() {
+            const stars = document.querySelectorAll('.star-icon');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const val = parseInt(this.getAttribute('data-val'));
+                    currentRating = val;
+                    
+                    // Highlight stars
+                    stars.forEach(s => {
+                        const sVal = parseInt(s.getAttribute('data-val'));
+                        if (sVal <= val) s.classList.add('active');
+                        else s.classList.remove('active');
+                    });
+
+                    // Show Form
+                    document.getElementById('reviewFormContainer').style.display = 'block';
+                });
+            });
+        }
+
+        function updateCharCount() {
+            const input = document.getElementById('reviewComment');
+            const countSpan = document.getElementById('charCount');
+            countSpan.innerText = `${input.value.length} / 150`;
+        }
+
+        function submitReview() {
+            const name = document.getElementById('reviewName').value;
+            const type = document.getElementById('reviewType').value;
+            const comment = document.getElementById('reviewComment').value;
+
+            if (!name || !type || !comment) {
+                alert("Harap isi semua kolom ulasan.");
+                return;
+            }
+
+            // Create WhatsApp Message for Review
+            const stars = "★".repeat(currentRating);
+            const msg = `Halo Admin, saya ingin mengirim ulasan:%0A%0A` +
+                        `*Rating:* ${stars} (${currentRating}/5)%0A` +
+                        `*Nama:* ${name}%0A` +
+                        `*Order:* ${type}%0A` +
+                        `*Ulasan:* "${comment}"`;
+            
+            window.open(`https://wa.me/6282283687565?text=${msg}`, '_blank');
+        }
+
+
         const cursor = document.getElementById('cursor');
         function bindHoverEvents() {
-            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .service-action-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch, .testi-card, .payment-cat-header, .payment-item, .copy-btn');
+            const hoverTargets = document.querySelectorAll('.hover-target, a, .menu-title, .close-modal, .order-btn, .service-action-btn, .page-num, .cta-btn, .float-wa, .portfolio-item, .lang-switch, .testi-card, .payment-cat-header, .payment-item, .copy-btn, .star-icon, .review-input, .submit-review-btn');
             hoverTargets.forEach(target => {
                 target.removeEventListener('mouseenter', null); 
                 target.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
@@ -1115,12 +1257,17 @@
         const navOverlay = document.getElementById('navOverlay');
         const mainHeader = document.getElementById('mainHeader');
         
+        // MODIFIKASI: LOGIC GANTI LOGO SAAT MENU BUKA/TUTUP
         function toggleMenu() {
             menuBtn.classList.toggle('active');
             navOverlay.classList.toggle('open');
             mainHeader.classList.toggle('menu-active');
             document.body.classList.toggle('no-scroll');
+            
             const logoImg = document.getElementById('headerLogoImg');
+            
+            // Logic: Jika menu TERBUKA -> Ganti ke logo_web.png
+            // Jika menu TERTUTUP -> Kembali ke logo_ambigram.png
             if (navOverlay.classList.contains('open')) {
                 logoImg.src = 'logo_web.png';
             } else {
@@ -1133,7 +1280,8 @@
             navOverlay.classList.remove('open');
             mainHeader.classList.remove('menu-active');
             document.body.classList.remove('no-scroll');
-            document.getElementById('headerLogoImg').src = 'logo_web.png';
+            // Reset logo to default (ambigram)
+            document.getElementById('headerLogoImg').src = 'logo_ambigram.png';
         }
 
         menuBtn.addEventListener('click', toggleMenu);
